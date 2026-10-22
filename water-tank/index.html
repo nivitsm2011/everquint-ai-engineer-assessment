@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    ```
+    <title>Water Tank Calculator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef6ff;
+            margin: 0;
+            padding: 30px 15px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #164e80;
+        }
+
+        p {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        input {
+            width: 100%;
+            max-width: 450px;
+            padding: 12px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            display: block;
+            margin: 15px auto;
+            padding: 12px 24px;
+            background-color: #087f8c;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #065f68;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #164e80;
+        }
+
+        #visualization {
+            width: 100%;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        #visualization svg {
+            display: block;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .legend {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .building-key {
+            color: #164e80;
+            font-weight: bold;
+        }
+
+        .water-key {
+            color: #0284c7;
+            font-weight: bold;
+        }
+    </style>
+    ```
+
+</head>
+
+<body>
+
+    ```
+    <main class="container">
+
+        <h1>💧 Water Tank Calculator</h1>
+
+        <p>
+            Enter building heights separated by commas to calculate
+            the amount of water trapped between them.
+        </p>
+
+        <input type="text" id="heights" placeholder="Example: 3, 0, 2, 0, 4" aria-label="Building heights">
+
+        <button type="button" onclick="calculateAndDisplay()">
+            Calculate Water
+        </button>
+
+        <p id="result" role="status" aria-live="polite"></p>
+
+        <div id="visualization"></div>
+
+        <p class="legend">
+            <span class="building-key">■ Buildings</span>
+            &nbsp;&nbsp;
+            <span class="water-key">■ Trapped water</span>
+        </p>
+
+    </main>
+
+    <script>
+        // Calculate trapped water using the two-pointer technique.
+        function calculateWater(heights) {
+            let left = 0;
+            let right = heights.length - 1;
+
+            let leftMax = 0;
+            let rightMax = 0;
+
+            let totalWater = 0;
+
+            while (left < right) {
+                if (heights[left] <= heights[right]) {
+
+                    if (heights[left] >= leftMax) {
+                        leftMax = heights[left];
+                    } else {
+                        totalWater += leftMax - heights[left];
+                    }
+
+                    left++;
+
+                } else {
+
+                    if (heights[right] >= rightMax) {
+                        rightMax = heights[right];
+                    } else {
+                        totalWater += rightMax - heights[right];
+                    }
+
+                    right--;
+                }
+            }
+
+            return totalWater;
+        }
+
+
+        // Draw the buildings and trapped water using SVG.
+        function drawTank(heights) {
+            const container = document.getElementById("visualization");
+
+            const barWidth = 30;
+            const gap = 8;
+            const padding = 20;
+            const groundY = 230;
+
+            const maxHeight = Math.max(...heights, 1);
+            const scale = Math.min(180 / maxHeight, 30);
+
+            const svgWidth = Math.max(
+                300,
+                padding * 2 +
+                heights.length * (barWidth + gap) - gap
+            );
+
+            const svgHeight = 265;
+
+            const leftMax = [];
+            const rightMax = [];
+
+            let maximum = 0;
+
+            // Find the maximum height from the left.
+            for (let i = 0; i < heights.length; i++) {
+                maximum = Math.max(maximum, heights[i]);
+                leftMax[i] = maximum;
+            }
+
+            maximum = 0;
+
+            // Find the maximum height from the right.
+            for (let i = heights.length - 1; i >= 0; i--) {
+                maximum = Math.max(maximum, heights[i]);
+                rightMax[i] = maximum;
+            }
+
+            let svg = `
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 ${svgWidth} ${svgHeight}"
+                width="${svgWidth}"
+                role="img"
+                aria-label="Visualization of buildings and trapped water"
+            >
+        `;
+
+            // Draw the ground line.
+            svg += `
+            <line
+                x1="5"
+                y1="${groundY}"
+                x2="${svgWidth - 5}"
+                y2="${groundY}"
+                stroke="#555555"
+                stroke-width="2"
+            />
+        `;
+
+            for (let i = 0; i < heights.length; i++) {
+                const x = padding + i * (barWidth + gap);
+
+                const buildingHeight = heights[i] * scale;
+                const buildingY = groundY - buildingHeight;
+
+                const waterLevel = Math.min(
+                    leftMax[i],
+                    rightMax[i]
+                );
+
+                const waterHeight = Math.max(
+                    0,
+                    waterLevel - heights[i]
+                ) * scale;
+
+                // Draw water first.
+                if (waterHeight > 0) {
+                    const waterY = groundY - waterLevel * scale;
+
+                    svg += `
+                    <rect
+                        x="${x}"
+                        y="${waterY}"
+                        width="${barWidth}"
+                        height="${waterHeight}"
+                        fill="#38bdf8"
+                        fill-opacity="0.85"
+                    />
+                `;
+                }
+
+                // Draw buildings in front of the water.
+                if (heights[i] > 0) {
+                    svg += `
+                    <rect
+                        x="${x}"
+                        y="${buildingY}"
+                        width="${barWidth}"
+                        height="${buildingHeight}"
+                        fill="#164e80"
+                    />
+                `;
+                }
+
+                // Label each building.
+                svg += `
+                <text
+                    x="${x + barWidth / 2}"
+                    y="${groundY + 20}"
+                    text-anchor="middle"
+                    font-size="12"
+                    fill="#333333"
+                >${heights[i]}</text>
+            `;
+            }
+
+            svg += "</svg>";
+
+            container.innerHTML = svg;
+        }
+
+
+        // Validate input, calculate water, and update the page.
+        function calculateAndDisplay() {
+            const input = document
+                .getElementById("heights")
+                .value.trim();
+
+            const resultElement = document.getElementById("result");
+            const visualization = document.getElementById("visualization");
+
+            resultElement.textContent = "";
+            visualization.innerHTML = "";
+
+            // Check for empty input.
+            if (input === "") {
+                resultElement.textContent =
+                    "Please enter building heights.";
+                return;
+            }
+
+            // Split input into individual values.
+            const parts = input.split(",").map(
+                part => part.trim()
+            );
+
+            // Reject letters, negative values, and missing values.
+            if (parts.some(part => !/^\d+$/.test(part))) {
+                resultElement.textContent =
+                    "Invalid input. Enter non-negative whole numbers separated by commas.";
+                return;
+            }
+
+            // Limit the number of buildings.
+            if (parts.length > 100) {
+                resultElement.textContent =
+                    "Please enter no more than 100 building heights.";
+                return;
+            }
+
+            const heights = parts.map(Number);
+
+            // Reject integers outside the safe numeric range.
+            if (heights.some(
+                height => !Number.isSafeInteger(height)
+            )) {
+                resultElement.textContent =
+                    "Please enter smaller whole numbers.";
+                return;
+            }
+
+            // Calculate the trapped water.
+            const totalWater = calculateWater(heights);
+
+            resultElement.textContent =
+                "Total trapped water: " + totalWater + " units";
+
+            // Draw the visualization.
+            drawTank(heights);
+        }
+    </script>
+    ```
+
+</body>
+
+</html>s
