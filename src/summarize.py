@@ -144,6 +144,12 @@ class Summarizer:
         self._calls = 0
 
     @property
+    def llm_name(self) -> str:
+        """``provider/model`` from config, without creating a client (so no key check yet)."""
+        provider = self.cfg.llm_provider
+        return f"{provider}/{self.cfg.get(f'llm.{provider}.model')}"
+
+    @property
     def llm(self) -> LLMClient:
         if self._llm is None:
             self._llm = get_llm(self.cfg)

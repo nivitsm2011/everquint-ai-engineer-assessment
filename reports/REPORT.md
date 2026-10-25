@@ -246,3 +246,30 @@ repeated query is instant. Using the OpenAI provider would shorten summaries to 
 - Single relevant document per query; LLM-written queries; one random sample of 200.
 - ROUGE and the human sheet were run on 40 and 15 samples respectively, smaller than planned.
 - Summary faithfulness is unmeasured until the human sheet is scored.
+
+## 6. Interface (Streamlit)
+
+Run `streamlit run app/streamlit_app.py` (needs the indexes; `ollama serve` for summaries).
+
+- **Auto-suggestion:** the search box (`streamlit-searchbox`) offers completions as you type, from a prefix
+  index (`src/suggest.py`, cached in `indexes/suggest.pkl`, built in about 13 s on first use) over
+  about 38,000 phrases: 1-3 word n-grams that occur often in the corpus plus short article titles. Matches are
+  ranked by corpus frequency, and the user's recent queries in the session come first. Typing "tropical st"
+  offers "tropical storm", "tropical storm warning", "tropical storm force"...
+- **Controls (sidebar):** search method (hybrid by default), top-N (1-50), results per page (3/5/10), and
+  summary length: short / medium / long or a custom 20-500 word slider.
+- **Results:** paginated cards (Previous / Next with a "Page x of y" indicator) showing title, document id,
+  method, score, up to 2 excerpts with the query terms in bold, and an expander with the full article.
+  Markdown and `$` signs in article text are escaped so money amounts do not render as maths.
+- **Summarize results:** summarizes the top results (at most 5, `app.max_summary_docs`, because a local CPU
+  model needs about a minute per article) at the chosen length and shows the words produced, the target, the
+  articles used and the time taken. Errors (Ollama not running, missing indexes) appear as plain messages.
+- **Loading:** indexes, chunk table and embedding model are loaded once with `st.cache_resource`; the first
+  page load takes about 30-60 s on this laptop, later searches take well under a second.
+
+Checked manually in a browser (screenshots in `reports/figures/`): `app_1_autosuggest.jpg` (suggestions),
+`app_2_pagination_page1.jpg` and `app_3_pagination_page2.jpg` (3 per page, page 1 of 2 and 2 of 2, Next
+disabled on the last page), `app_4_custom_length_summary.jpg` (custom 60-word target, 2 articles: 71 words
+in 87 s). The Short/Medium/Long radio buttons use the same code path as the custom slider and were exercised in
+Phase 4's CLI runs, but were not clicked through in the browser. Known cosmetic issue: after choosing a
+suggestion, the box keeps the partially typed text while the results heading shows the chosen phrase.

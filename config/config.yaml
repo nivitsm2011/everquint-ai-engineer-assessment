@@ -15,6 +15,7 @@ paths:
   embeddings_file: indexes/embeddings.npy
   index_stats_file: reports/index_stats.json
   cache_dir: data/cache
+  suggest_index: indexes/suggest.pkl
   figures_dir: reports/figures
   testset_file: reports/testset.csv
   search_metrics_file: reports/search_metrics.csv
@@ -55,6 +56,16 @@ embedding:
   normalize: true
   max_seq_length: 256        # tokens; ~200-word chunks fit almost entirely
   checkpoint_every: 5000     # chunks per saved block (resume after interruption)
+
+app:
+  max_summary_docs: 5        # the app summarises at most this many top results (CPU LLM is slow)
+
+suggest:
+  min_count_unigram: 60      # an n-gram must occur this often in the corpus to be suggested
+  min_count_bigram: 25
+  min_count_trigram: 12
+  max_title_chars: 90        # longer titles are not offered as completions
+  limit: 8
 
 index:
   bm25:
