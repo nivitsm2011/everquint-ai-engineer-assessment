@@ -1,0 +1,26 @@
+2026-10-25 19:56:28,045 INFO src.bootstrap: corpus or indexes missing: building a demo corpus (first start only)
+2026-10-25 19:56:28,045 INFO src.data_prep: Preparing 2000 corpus articles from the train split
+2026-10-25 19:56:55,492 INFO src.data_prep: [d] outlet_dateline           89 docs
+2026-10-25 19:56:55,492 INFO src.data_prep: [d] email_to_friend          764 docs
+2026-10-25 19:56:55,492 INFO src.data_prep: [d] whitespace              1328 docs
+2026-10-25 19:56:55,492 INFO src.data_prep: [d] cnn_dateline            1934 docs
+2026-10-25 19:56:55,492 INFO src.data_prep: [d] urls                      19 docs
+2026-10-25 19:56:55,504 INFO src.data_prep: [d] unicode_nfkc              51 docs
+2026-10-25 19:56:55,504 INFO src.data_prep: [d] cnn_dateline_inline        1 docs
+2026-10-25 19:56:55,504 INFO src.data_prep: [d] DROP exact_duplicate     117 docs
+2026-10-25 19:56:55,504 INFO src.data_prep: [d] DROP too_short             3 docs
+2026-10-25 19:56:55,504 INFO src.data_prep: [d] DROP near_duplicate        5 docs
+2026-10-25 19:56:55,504 INFO src.data_prep: [d] read 2125 rows -> kept 2000 docs
+2026-10-25 19:56:55,512 INFO src.data_prep: Preparing 50 held-out articles from the test split
+2026-10-25 19:57:05,876 INFO src.data_prep: [h] cnn_dateline              50 docs
+2026-10-25 19:57:05,876 INFO src.data_prep: [h] whitespace                18 docs
+2026-10-25 19:57:05,876 INFO src.data_prep: [h] read 50 rows -> kept 50 docs
+2026-10-25 19:57:08,226 INFO src.data_prep: Wrote C:\DocSearchLLM\doc-search-summarizer\data\cloud\data_stats.json
+2026-10-25 19:57:09,596 INFO src.indexing: build_bm25 took 1258.6 ms
+2026-10-25 19:57:10,867 INFO src.indexing: build_tfidf took 1227.7 ms
+2026-10-25 19:57:16,238 INFO src.indexing: Embedding 7791 chunks on cpu
+2026-10-25 20:02:22,096 INFO src.indexing: embedded 5000 / 7791
+2026-10-25 20:05:05,833 INFO src.indexing: embedded 7791 / 7791
+2026-10-25 20:05:05,875 INFO src.indexing: embed_chunks took 475003.4 ms
+2026-10-25 20:05:05,888 INFO src.indexing: build_faiss took 12.0 ms
+built: True

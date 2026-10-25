@@ -67,17 +67,41 @@ def with_variant(cfg: Config, variant: str) -> Config:
     return Config(data=data)
 
 
+def _deep_update(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
+    """Recursively merge ``override`` into ``base`` (returns a new dict)."""
+    out = copy.deepcopy(base)
+    for key, value in override.items():
+        if isinstance(value, dict) and isinstance(out.get(key), dict):
+            out[key] = _deep_update(out[key], value)
+        else:
+            out[key] = value
+    return out
+
+
+def read_yaml(path: Path) -> dict[str, Any]:
+    """Read a YAML config; ``extends: other.yaml`` (relative to the file) merges it underneath."""
+    with path.open("r", encoding="utf-8") as fh:
+        data = yaml.safe_load(fh)
+    parent = data.pop("extends", None)
+    return _deep_update(read_yaml(path.parent / parent), data) if parent else data
+
+
 @lru_cache(maxsize=1)
 def load_config(path: str | None = None) -> Config:
     """Load YAML config (cached) after loading ``.env`` into the environment.
 
-    ``finetune.enabled: true`` (or ``EMBEDDING_VARIANT=finetuned`` in the environment) switches the
-    whole system to the fine-tuned embedding model.
+    The file is ``path``, else ``$DOCSEARCH_CONFIG`` (e.g. ``config/config.cloud.yaml`` for hosting),
+    else ``config/config.yaml``. ``finetune.enabled: true`` (or ``EMBEDDING_VARIANT=finetuned`` in the
+    environment) switches the whole system to the fine-tuned embedding model.
     """
     load_dotenv(PROJECT_ROOT / ".env")
-    cfg_path = Path(path) if path else DEFAULT_CONFIG_PATH
-    with cfg_path.open("r", encoding="utf-8") as fh:
-        data = yaml.safe_load(fh)
+    chosen = path or os.environ.get("DOCSEARCH_CONFIG")
+    cfg_path = (
+        (PROJECT_ROOT / chosen)
+        if chosen and not Path(chosen).is_absolute()
+        else Path(chosen or DEFAULT_CONFIG_PATH)
+    )
+    data = read_yaml(cfg_path)
     cfg = Config(data=data)
     variant = os.environ.get("EMBEDDING_VARIANT") or ("finetuned" if data["finetune"]["enabled"] else "base")
     return with_variant(cfg, variant)

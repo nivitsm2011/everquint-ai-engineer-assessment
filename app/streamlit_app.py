@@ -5,6 +5,7 @@ Run:  streamlit run app/streamlit_app.py
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -13,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import streamlit as st  # noqa: E402
 from streamlit_searchbox import st_searchbox  # noqa: E402
 
+from src.bootstrap import ensure_ready, is_ready  # noqa: E402
 from src.config import load_config  # noqa: E402
 from src.llm import LLMError  # noqa: E402
 from src.search import Result, SearchEngine  # noqa: E402
@@ -35,11 +37,21 @@ LENGTH_LABELS = {
 
 st.set_page_config(page_title="Document Search & Summarizer", page_icon="🔎", layout="wide")
 
+try:  # hosted deployments: expose Streamlit secrets (OPENAI_API_KEY, DOCSEARCH_CONFIG) as env vars
+    for _name, _value in st.secrets.items():
+        if isinstance(_value, str):
+            os.environ.setdefault(_name, _value)
+except Exception:  # noqa: BLE001, S110 - no secrets file when running locally
+    pass
+
 
 # --- resources loaded once per server process ------------------------------------------------------
 @st.cache_resource(show_spinner="Loading indexes and models (first run only)…")
 def get_resources() -> tuple[SearchEngine, Summarizer, SuggestIndex]:
     cfg = load_config()
+    if not is_ready(cfg):  # fresh host with no data yet: build a small demo corpus once
+        with st.spinner("First start: building a small demo corpus and its indexes (a few minutes)…"):
+            ensure_ready(cfg)
     engine = SearchEngine(cfg)
     _ = engine.indexes, engine.chunks, engine.embedder  # load everything now, not on first query
     return engine, Summarizer(cfg), load_suggest_index(cfg)
@@ -69,8 +81,8 @@ def go_to(page: int) -> None:
 cfg = load_config()
 st.title("🔎 Document Search & Summarizer")
 st.caption(
-    "Hybrid keyword + embedding search over ~20,000 news articles, with LLM summaries "
-    "that use only the retrieved articles."
+    f"Hybrid keyword + embedding search over {int(cfg.get('corpus.train_docs')):,} news articles, "
+    "with LLM summaries that use only the retrieved articles."
 )
 
 try:

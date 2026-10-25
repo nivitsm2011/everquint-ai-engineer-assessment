@@ -1,0 +1,31 @@
+# Hosted demo (e.g. Streamlit Community Cloud): a small corpus that is built on first start.
+# Select it with the environment variable / Streamlit secret  DOCSEARCH_CONFIG=config/config.cloud.yaml
+extends: config.yaml
+
+paths:                       # separate folders so a hosted/demo build never touches the full corpus
+  documents_file: data/cloud/documents.parquet
+  chunks_file: data/cloud/chunks.parquet
+  heldout_file: data/cloud/heldout.parquet
+  stats_file: data/cloud/data_stats.json
+  bm25_index: indexes/cloud/bm25.pkl
+  tfidf_index: indexes/cloud/tfidf.pkl
+  faiss_index: indexes/cloud/dense.faiss
+  embeddings_file: indexes/cloud/embeddings.npy
+  index_stats_file: indexes/cloud/index_stats.json
+  suggest_index: indexes/cloud/suggest.pkl
+  cache_dir: data/cloud/cache
+
+corpus:
+  train_docs: 2000           # ~7,700 chunks: builds in a few minutes on a small CPU
+  heldout_docs: 50
+
+llm:
+  provider: openai           # no Ollama on the host; key comes from the OPENAI_API_KEY secret
+
+suggest:                     # smaller corpus -> lower frequency thresholds
+  min_count_unigram: 10
+  min_count_bigram: 5
+  min_count_trigram: 3
+
+app:
+  max_summary_docs: 5
