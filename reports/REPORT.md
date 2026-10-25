@@ -157,3 +157,92 @@ evacuations", llama3.2:3b on CPU):
 
 Quality is only eyeballed so far (the summaries read coherently and cover all three storms); faithfulness
 and ROUGE are measured in the evaluation phase.
+
+## 5. Evaluation
+
+Run with `python scripts/run_eval.py` (stages `testset`, `search`, `summary`, `latency`; all resumable).
+Raw outputs: `reports/testset.csv`, `search_metrics.csv`, `search_ranks.csv`, `summary_scores.csv`,
+`summary_details.csv`, `human_eval_sheet.csv`, `latency.csv`, `metrics_summary.json`.
+
+### 5.1 Test set
+
+200 articles drawn at random (seed 42) from the indexed corpus. `llama3.2:3b` wrote one 3-8 word search
+query per article, told to paraphrase; a query sharing 5 or more consecutive words with the article is
+regenerated once. Example queries: "A380 maiden flight luxury features", "Argentine president defends grain
+export tax hike". Limits: only the source article counts as relevant, so other articles on the same story
+count as misses (accuracy is understated); and because an LLM read the article before writing the query,
+keyword methods may be favoured. With 200 queries, differences of a few points are within noise
+(standard error about 3 points on a 0.6 rate).
+
+### 5.2 Search accuracy (`figures/search_metrics.png`)
+
+| Method | Recall@1 | Recall@5 | Recall@10 | MRR@10 | nDCG@10 | Precision@5 |
+|---|---|---|---|---|---|---|
+| BM25 | 0.580 | 0.870 | 0.925 | 0.704 | 0.758 | 0.174 |
+| TF-IDF | 0.495 | 0.825 | 0.875 | 0.635 | 0.695 | 0.165 |
+| Dense | 0.540 | 0.855 | 0.905 | 0.676 | 0.733 | 0.171 |
+| **Hybrid (RRF)** | **0.595** | **0.875** | **0.965** | **0.725** | **0.784** | **0.175** |
+
+Hybrid is best on every metric; its clearest gain is Recall@10 (+4 points over BM25, +6 over dense). BM25 is
+a strong baseline here because the queries reuse article vocabulary. TF-IDF is weakest. Precision@5 is
+capped at 0.2 because each query has one relevant document.
+
+### 5.3 Summary quality
+
+ROUGE F1 (stemmed) against the CNN/DailyMail highlights (mean 44.5 words). 40 test articles were
+summarised at each length (`evaluation.summary_eval_docs`; 200 would take about 6 hours on this CPU).
+Lead-3 is the first three sentences.
+
+| System | Docs | ROUGE-1 | ROUGE-2 | ROUGE-L | Mean words |
+|---|---|---|---|---|---|
+| Lead-3 (same 40 docs) | 40 | 0.306 | 0.101 | 0.202 | 56.5 |
+| Lead-3 (all 200 test docs) | 200 | 0.346 | 0.140 | 0.224 | 66.8 |
+| LLM short (~50 words) | 40 | **0.371** | **0.132** | **0.252** | 49.3 |
+| LLM medium (~120 words) | 40 | 0.297 | 0.107 | 0.190 | 123.5 |
+| LLM long (~250 words) | 40 | 0.221 | 0.087 | 0.148 | 225.9 |
+
+- The short LLM summary beats lead-3 on the same 40 articles (ROUGE-1 0.371 vs 0.306). Lead-3 scores higher
+  on all 200 articles than on this subset, so the subset is a harder sample; the 40-document comparison is
+  the fair one, and with n=40 the gap is suggestive, not conclusive.
+- Longer summaries score lower because F1 penalises length when the reference is about 45 words: the
+  extra words lower precision. ROUGE therefore says little about whether a long summary is better
+  for a reader.
+- Word targets are met on average (49 / 124 / 226 words for 50 / 120 / 250), with a range of 42-55,
+  105-137 and 180-284 words.
+- ROUGE rewards overlap with a human-written highlight, not factual faithfulness. Faithfulness is only
+  assessed by the human sheet below.
+
+### 5.4 Human evaluation
+
+`reports/human_eval_sheet.csv` has **15 rows** (not the 30 in the brief; time constraint). Each row has a
+test query, the top-3 hybrid results, their full text, the medium-length combined summary, and empty
+columns to score 1-5 for coherence, coverage, faithfulness and conciseness, plus comments. The 15 rows are the
+first 15 of a fixed 30-row pool (`human_eval_pool`); setting `human_eval_samples: 30` and rerunning adds the
+rest from the cache. **These ratings have not been filled in yet**; once they are, run
+`python scripts/score_human_eval.py` to get averages (`reports/human_eval_scores.json`).
+
+### 5.5 Efficiency (CPU laptop, `latency.csv`)
+
+| Component | n | Mean | p95 |
+|---|---|---|---|
+| Load indexes (BM25 + TF-IDF + FAISS) | 5 | 1.5 s | 1.5 s |
+| Load embedding model | 1 | 0.4 s | n/a |
+| Search: BM25 | 200 | 171 ms | 237 ms |
+| Search: TF-IDF | 200 | 18 ms | 19 ms |
+| Search: dense | 200 | 20 ms | 22 ms |
+| Search: hybrid | 200 | 191 ms | 261 ms |
+| Summarise 1 doc, short | 40 | 36 s | 58 s |
+| Summarise 1 doc, medium | 40 | 41 s | 64 s |
+| Summarise 1 doc, long | 40 | 52 s | 76 s |
+| Summarise top-3 docs, medium (map-reduce) | 15 | 152 s | 213 s |
+
+Search is interactive. BM25 (and so hybrid) is the slowest retriever because `rank_bm25` scores every chunk in
+Python on each query; dense search over 77k vectors takes about 20 ms. Summarisation dominates
+the cost: a local 3B model on CPU needs well over a minute for a combined summary, and the disk cache means a
+repeated query is instant. Using the OpenAI provider would shorten summaries to seconds.
+
+### 5.6 Limitations
+
+- Single relevant document per query; LLM-written queries; one random sample of 200.
+- ROUGE and the human sheet were run on 40 and 15 samples respectively, smaller than planned.
+- Summary faithfulness is unmeasured until the human sheet is scored.

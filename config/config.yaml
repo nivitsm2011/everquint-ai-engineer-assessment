@@ -15,6 +15,16 @@ paths:
   embeddings_file: indexes/embeddings.npy
   index_stats_file: reports/index_stats.json
   cache_dir: data/cache
+  figures_dir: reports/figures
+  testset_file: reports/testset.csv
+  search_metrics_file: reports/search_metrics.csv
+  search_ranks_file: reports/search_ranks.csv
+  summary_details_file: reports/summary_details.csv
+  summary_scores_file: reports/summary_scores.csv
+  human_eval_file: reports/human_eval_sheet.csv
+  human_eval_scores_file: reports/human_eval_scores.json
+  latency_file: reports/latency.csv
+  metrics_summary_file: reports/metrics_summary.json
 
 corpus:
   dataset_name: abisee/cnn_dailymail
@@ -93,10 +103,18 @@ summary:
 
 evaluation:
   seed: 42
-  test_docs: 200
-  queries_per_doc: 1
-  k_values: [1, 3, 5, 10]
-  human_eval_samples: 20
+  test_docs: 200             # indexed documents used as search targets
+  query_doc_words: 350       # words of the article shown to the LLM when it writes a query
+  query_max_words: 12
+  max_copied_run: 5          # reject queries copying this many consecutive words from the article
+  k_values: [1, 5, 10]
+  summary_eval_docs: 40      # test docs summarised per length for ROUGE (LLM on CPU is slow; set 200 for all)
+  summary_lengths: [short, medium, long]
+  human_eval_pool: 30        # fixed random pool of test queries for the human sheet
+  human_eval_samples: 15     # rows actually generated (first n of the pool); 30 = full pool, ~40 min more
+  human_eval_length: medium
+  human_eval_top_docs: 3     # retrieved documents summarised together for the human sheet
+  latency_repeats_index_load: 5
 
 logging:
   level: INFO

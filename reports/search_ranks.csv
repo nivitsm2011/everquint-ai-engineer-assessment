@@ -1,0 +1,201 @@
+doc_id,query,rank_bm25,rank_tfidf,rank_dense,rank_hybrid
+d00146,A380 maiden flight luxury features,1.0,1.0,2.0,2.0
+d00453,Lufthansa plane scrapes wing during landing,1.0,1.0,1.0,1.0
+d00614,Mexican troops deployed to US border,7.0,,2.0,2.0
+d00692,first ladies in politics,1.0,1.0,10.0,1.0
+d00742,Argentine president defends grain export tax hike,,,4.0,
+d00869,Hurricane Hanna southeastern US coast,2.0,3.0,2.0,2.0
+d01163,India's rural poverty and development issues,1.0,1.0,2.0,1.0
+d01265,formula one last race world championships,,,,
+d01347,mortgage crisis explained for kids,6.0,3.0,6.0,2.0
+d01516,AC Milan vs Fiorentina result yesterday,1.0,3.0,10.0,5.0
+d01578,arson fires in coatesville pennsylvania,1.0,1.0,1.0,1.0
+d01702,Shimon Peres phone conversation with Recep Tayyip Erdogan,1.0,1.0,1.0,1.0
+d01752,ryanair toilet fees,1.0,1.0,1.0,1.0
+d01767,Sgt Michael Strank Marine Corps citizenship,1.0,1.0,1.0,1.0
+d01798,John McCain bumper sticker attack,1.0,1.0,1.0,1.0
+d01805,Barack Obama first overseas trip March,1.0,2.0,1.0,1.0
+d01827,Liberian president son sentenced to 97 years,1.0,1.0,1.0,1.0
+d01865,Germany school shooting teenager kills 15,4.0,4.0,1.0,1.0
+d01933,disabled workers start own businesses,2.0,2.0,1.0,1.0
+d02119,April Fools Day news stories 2024,1.0,1.0,1.0,1.0
+d02281,US-Mexico border security,7.0,9.0,,
+d02359,wounded veterans fly fishing therapy,1.0,1.0,1.0,1.0
+d02520,American Airlines transatlantic flight with only five passengers,1.0,1.0,1.0,1.0
+d02538,US relations with Arab nations,1.0,1.0,3.0,1.0
+d02582,Craigslist personal services murder suspect,1.0,1.0,,10.0
+d02781,Identity theft tax refund problems,1.0,2.0,1.0,1.0
+d02784,earthquake in southern california,4.0,4.0,3.0,4.0
+d03043,What is the secret language of men,1.0,1.0,1.0,1.0
+d03063,Taliban cease fire in Pakistan's Swat Valley,1.0,3.0,1.0,1.0
+d03194,Miami beach hotels with Art Deco style,2.0,2.0,1.0,1.0
+d03221,global financial system reform,2.0,2.0,1.0,2.0
+d03278,New Iberia primate research center accused,1.0,1.0,1.0,1.0
+d03322,XMen Origins Wolverine box office,2.0,3.0,3.0,3.0
+d03334,Tim Russert heart attack NBC anchor,1.0,1.0,1.0,1.0
+d03618,childhood obesity programs for teens,3.0,,1.0,3.0
+d03765,Flight 93 memorial land dispute,1.0,1.0,2.0,1.0
+d03863,Pixar's Up movie review,2.0,3.0,2.0,3.0
+d03978,Guinea Bissau military coup fears escalate,1.0,1.0,4.0,2.0
+d03990,who is candace bushnell,2.0,2.0,2.0,2.0
+d04279,budget hotel industry growth,1.0,1.0,1.0,1.0
+d04506,Airbus A330 airspeed sensor failures,2.0,2.0,1.0,2.0
+d04510,Michael Jackson predicted his own death,9.0,,,10.0
+d04666,Rockefeller family impersonator,7.0,,,4.0
+d04766,T Boone Pickens wind farm Texas,1.0,1.0,2.0,1.0
+d04772,Dallas Cowboys practice field roof collapse,1.0,1.0,1.0,1.0
+d04889,trinidad leatherback turtle conservation efforts,1.0,1.0,1.0,1.0
+d05490,Who is the greatest Formula One driver,1.0,1.0,1.0,1.0
+d05515,Michael Jackson funeral location,8.0,,1.0,1.0
+d05517,Casey Anthony death penalty trial moved,2.0,4.0,,9.0
+d05614,Richard Nixon tapes and documents released,1.0,1.0,1.0,1.0
+d05736,Nepal journalist killed over reporting on women's rights,2.0,2.0,1.0,2.0
+d05858,Dallas terrorism suspect makes first court appearance,1.0,8.0,,4.0
+d06027,new flu vaccine trials start soon,2.0,1.0,1.0,1.0
+d06059,Honda airbag recall 2001 models,2.0,2.0,2.0,2.0
+d06212,Baltimore beating of elderly African American man,1.0,1.0,1.0,1.0
+d06413,Anna Nicole Smith prescription death investigation,5.0,4.0,,9.0
+d06472,First 100 days of a president,1.0,1.0,1.0,1.0
+d06563,Pittsburgh economic summit G20,2.0,3.0,1.0,1.0
+d06675,Dominican Republic travel tips,,,1.0,7.0
+d06778,US troop deaths in Iraq lowest in May,1.0,2.0,1.0,1.0
+d06850,Iranian forces occupy Iraqi oil well,1.0,1.0,2.0,1.0
+d06928,British soldier completes London Marathon,1.0,3.0,5.0,2.0
+d07035,DragonCon dating success stories,,,1.0,7.0
+d07224,President Obama on Late Show with David Letterman,1.0,1.0,1.0,1.0
+d07234,Virginia Tech student missing at Metallica concert,1.0,1.0,1.0,1.0
+d07282,recession blame shifts from republicans to democrats,1.0,1.0,1.0,1.0
+d07349,Apple tablet rumors,1.0,2.0,6.0,2.0
+d07360,Michael Jackson children reality show,1.0,1.0,2.0,1.0
+d07615,Obama half brother claims father was abusive,1.0,1.0,2.0,2.0
+d07708,prison inmates turn to meditation for calm,1.0,1.0,1.0,1.0
+d07978,Ireland Catholic Church child abuse cover up,5.0,7.0,2.0,4.0
+d08113,Dominican man arrested for human trafficking,1.0,1.0,1.0,1.0
+d08147,Florida man released after 35 years,1.0,1.0,,3.0
+d08161,Guatemalan president implicated in own brother's assassination,2.0,4.0,2.0,2.0
+d08168,Rhode Island teacher Obama effigy controversy,1.0,1.0,1.0,1.0
+d08344,California doctor accused of negligence octuplets,1.0,1.0,1.0,1.0
+d08575,Oklahoma murder suspect found with missing girl,1.0,1.0,1.0,1.0
+d08656,Kenya elephant orphanage,2.0,,2.0,2.0
+d08666,Honduras grants safe passage to ousted president,1.0,1.0,1.0,1.0
+d08691,Romanian mayor wears Nazi uniform during fashion show,1.0,1.0,1.0,1.0
+d08708,Rosie O'Donnell marriage rumors update,1.0,1.0,1.0,1.0
+d08757,Nebraska toddler death may have been caused by medication,1.0,2.0,1.0,1.0
+d08792,Katherine Heigl leaving Grey's Anatomy,3.0,2.0,1.0,1.0
+d08845,Jessica Simpson talks about media scrutiny,2.0,1.0,1.0,1.0
+d08916,Greek protests against austerity measures,,,9.0,
+d08926,Pakistani Taliban winter offensive plans,2.0,2.0,,8.0
+d08933,Haiti earthquake orphan children,,,3.0,6.0
+d09138,Photoshop CS5 new features,1.0,1.0,1.0,1.0
+d09200,Jordanian double agent kills CIA officials,1.0,1.0,2.0,1.0
+d09226,Turner Industries racial harassment complaint,1.0,1.0,1.0,1.0
+d09266,Ciudad Juarez mayor blames social issues for cartel violence,1.0,2.0,,3.0
+d09330,thailand protests red shirts,,,4.0,8.0
+d09386,Atlanta weather forecast cancelled flights,1.0,3.0,3.0,1.0
+d09388,plane crashes into IRS building,5.0,3.0,4.0,3.0
+d09455,minaret collapse in Morocco kills dozens,1.0,1.0,1.0,1.0
+d09883,Japanese whaling ship attacked by protesters,1.0,2.0,4.0,4.0
+d09905,Guatemala Tropical Storm Agatha death toll,2.0,2.0,2.0,2.0
+d09917,Nigel Farage plane crash UK election,1.0,2.0,1.0,1.0
+d09938,German president resigns over military comments,1.0,2.0,1.0,1.0
+d10010,Joran van der Sloot suspect in Natalee Holloway case,5.0,6.0,2.0,1.0
+d10069,Ben Roethlisberger sexual assault investigation,1.0,2.0,3.0,1.0
+d10079,Iranian president attacks Israel over aid flotilla incident,3.0,,4.0,2.0
+d10170,oil drilling disasters,10.0,,1.0,1.0
+d10430,Gambia seizes large shipment of cocaine bound for Europe,1.0,1.0,1.0,1.0
+d10815,Bristol Palin and Levi Johnston engaged again,1.0,1.0,1.0,1.0
+d10853,Joe Manchin to fill Robert Byrd Senate seat,1.0,1.0,1.0,1.0
+d10999,Winter storm cancels hundreds of flights,4.0,6.0,,8.0
+d11033,New Orleans police officers Katrina Danziger Bridge incident,3.0,4.0,2.0,2.0
+d11064,history of immigration control in the United States,4.0,4.0,1.0,2.0
+d11117,Muslim jogger reflects on 9/11,,,,6.0
+d11147,Alaska plane crash survivors talk to officials,1.0,1.0,1.0,1.0
+d11221,Transformer fire near White House disrupts wedding,1.0,1.0,1.0,1.0
+d11262,Serbian politician war crimes trial intimidation allegations,1.0,1.0,,10.0
+d11268,Retired US general signs with speaking agency,1.0,1.0,4.0,1.0
+d11327,Rolling Stone journalist denied embed in Afghanistan,1.0,1.0,1.0,1.0
+d11451,roger federer clay court form,4.0,2.0,7.0,3.0
+d12018,Rafael Nadal wins Monte Carlo Masters title,3.0,5.0,1.0,1.0
+d12139,California law to protect children from sex crimes,1.0,1.0,2.0,1.0
+d12522,salmonella egg recall,2.0,1.0,1.0,1.0
+d12532,Afghanistan security contractors ban committee,1.0,1.0,1.0,1.0
+d12600,Libyan backed ship docks in Egypt with Gaza aid,3.0,3.0,3.0,3.0
+d12649,FIFA suspends Nigerian football federation,2.0,3.0,1.0,2.0
+d12670,Valentino Rossi returns to MotoGP after leg injury,4.0,3.0,1.0,2.0
+d12765,Uyghur protests in Xinjiang province,1.0,1.0,2.0,1.0
+d12962,Inter Milan loses lead in Italian league,3.0,6.0,2.0,1.0
+d13038,Villarreal vs Hercules La Liga draw,1.0,2.0,2.0,1.0
+d13209,Christina Aguilera separation from Jordan Bratman,1.0,1.0,1.0,1.0
+d13235,Stephen Gately death Majorca,1.0,1.0,2.0,1.0
+d13261,Barcelona draw with Stuttgart in Champions League,5.0,5.0,4.0,2.0
+d13315,Tyler Clementi Rutgers University student death,2.0,2.0,3.0,3.0
+d13456,Bilbao car bomb attack,1.0,1.0,2.0,2.0
+d13565,Manchester City draw with Juventus,1.0,1.0,1.0,1.0
+d13580,South Korea live-fire drills near North Korea,1.0,1.0,1.0,1.0
+d13643,Kosovo organ trafficking allegations,1.0,1.0,1.0,1.0
+d13667,Google employees create browser extensions to fight data collection,1.0,2.0,1.0,1.0
+d13813,arsenal lose top spot in champions league,,,,
+d13900,Elvis Presley birthday celebration 2024,1.0,1.0,1.0,1.0
+d13915,China Japan diplomatic row,2.0,2.0,5.0,3.0
+d13917,Senate vote on nuclear arms treaty with Russia,2.0,1.0,3.0,2.0
+d13925,Guinea presidential election fraud allegations,1.0,1.0,1.0,1.0
+d14039,Charles Schumer Tom Coburn sit together State of the Union,1.0,1.0,1.0,1.0
+d14216,Juan Martin Del Potro wins U.S. Open,2.0,3.0,5.0,3.0
+d14324,Afghanistan seizes explosive devices from Iran,1.0,1.0,1.0,1.0
+d14428,northeast cold weather news updates,9.0,5.0,,8.0
+d14577,Barcelona wins 11th league game,10.0,10.0,2.0,2.0
+d14762,Soledad O'Brien Katrina story with young people,1.0,2.0,2.0,1.0
+d14792,Bangladesh to evict beggars ahead of Cricket World Cup,1.0,1.0,1.0,1.0
+d15041,Emmanuel Adebayor Jose Mourinho Real Madrid,1.0,1.0,1.0,1.0
+d15081,Manchester United injury update Park Ji-Sung,4.0,4.0,1.0,2.0
+d15084,Tottenham Hotspur vs AC Milan Champions League,2.0,2.0,,2.0
+d15244,Mary Rakovich and the Tea Party movement,1.0,1.0,6.0,1.0
+d15271,Christchurch earthquake death toll rises,2.0,2.0,1.0,1.0
+d15325,frank lampard penalty kick,1.0,1.0,1.0,1.0
+d15410,NASA space shuttle Discovery final landing,,7.0,1.0,6.0
+d15450,Chechen rebel leader claims responsibility Moscow airport attack,2.0,2.0,2.0,2.0
+d15494,Japan football team plays charity match,1.0,1.0,1.0,1.0
+d15534,Casey Stoner pole position MotoGP Qatar,2.0,3.0,1.0,2.0
+d15545,Green River Killer pleads guilty to 49th murder,1.0,1.0,1.0,1.0
+d15576,Kate Middleton royal carriage,1.0,1.0,1.0,1.0
+d15646,Sri Lanka cricket team recovery from terror attack,1.0,1.0,1.0,1.0
+d15664,Japanese noodle factory struggles after earthquake,1.0,1.0,1.0,1.0
+d15810,Kobe Bryant NBA fine for homophobic slur,2.0,1.0,2.0,1.0
+d15846,libyan rebel opposition struggles,2.0,3.0,4.0,2.0
+d15861,Haiti former president returns home before election,4.0,,9.0,9.0
+d16008,Jorge Lorenzo Portuguese MotoGP qualifying,1.0,1.0,2.0,1.0
+d16019,libya rebels arming,3.0,2.0,2.0,2.0
+d16252,linkedin ipo valuation,1.0,1.0,1.0,1.0
+d16313,Australian cattle mistreatment in Indonesia,1.0,1.0,1.0,1.0
+d16391,Bayern Munich Champions League qualification,1.0,3.0,1.0,1.0
+d16418,Copenhagen hotel blast suspect found guilty,1.0,1.0,1.0,1.0
+d16553,what is the gameplay like in homefront game,1.0,1.0,1.0,1.0
+d16556,future of transportation systems,,,,
+d16572,Casey Anthony defamation lawsuit judge change,2.0,2.0,1.0,2.0
+d16642,Anthony Weiner scandal latest news,1.0,2.0,2.0,1.0
+d16743,Tiger Woods returns to golf after injury,,,2.0,6.0
+d17005,Transocean CEO bonuses after Deepwater Horizon disaster,5.0,6.0,5.0,7.0
+d17021,Jimmy Carter visits Cuba,3.0,4.0,3.0,3.0
+d17025,Libyan blasts near Tripoli,1.0,1.0,5.0,2.0
+d17037,Irish man attempts rowing ocean challenge,2.0,2.0,2.0,1.0
+d17071,Wayne Rooney hair transplant,1.0,2.0,1.0,1.0
+d17611,Women's World Cup quarterfinals Japan vs Germany,,,2.0,3.0
+d17726,Tokyo earthquake mental health effects,2.0,,1.0,1.0
+d17867,Old Firm Derby result Sunday,,,,
+d17990,US jobs vs clean energy alternatives,1.0,1.0,1.0,1.0
+d17993,Social Security debate between Romney and Perry,1.0,1.0,1.0,1.0
+d18309,Texas congressional redistricting plan blocked,2.0,2.0,1.0,2.0
+d18322,Liberia election results and Ellen Johnson-Sirleaf,1.0,1.0,1.0,1.0
+d18372,Mongolia history and culture,1.0,1.0,1.0,1.0
+d18694,Kim Kardashian media coverage,1.0,3.0,1.0,1.0
+d18743,Kim Jong Il death in North Korea,,,1.0,8.0
+d19189,Reno air race crash victim count,4.0,4.0,4.0,4.0
+d19218,Queen Anne's Revenge cannon discovery,1.0,1.0,1.0,1.0
+d19237,Cristina Fernandez de Kirchner re elected,7.0,6.0,2.0,2.0
+d19264,New York City first casino,1.0,1.0,1.0,1.0
+d19329,Obama calls on Republicans to fight for middle class,1.0,1.0,1.0,1.0
+d19596,iranian american translator,1.0,1.0,6.0,1.0
+d19798,nuclear reactor restart japan,1.0,1.0,2.0,1.0
+d19881,Gordon Brown on rude voter,1.0,1.0,2.0,1.0
+d19883,church bombings in Malaysia,1.0,1.0,1.0,1.0
+d19921,man survives 6 days in Angeles National Forest,9.0,,6.0,5.0

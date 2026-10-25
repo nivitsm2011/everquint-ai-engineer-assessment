@@ -17,3 +17,4 @@ rouge-score==0.1.2
 streamlit==1.40.2
 tqdm==4.67.1
 pytest==8.3.4
+matplotlib==3.9.3

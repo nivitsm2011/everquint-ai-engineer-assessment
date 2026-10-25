@@ -1,0 +1,11 @@
+component,n,mean_ms,p95_ms
+load indexes (BM25+TF-IDF+FAISS),5,1505.6,1539.8
+load embedding model,1,386.2,386.2
+search: bm25 (top 10),200,171.3,237.2
+search: tfidf (top 10),200,17.7,19.0
+search: dense (top 10),200,19.8,22.4
+search: hybrid (top 10),200,190.5,260.7
+summarize 1 doc: short (~50 words),40,36298.8,57689.5
+summarize 1 doc: medium (~120 words),40,41342.2,64338.5
+summarize 1 doc: long (~250 words),40,52215.0,75587.5
+summarize top-3 docs: medium,15,151859.3,213319.0

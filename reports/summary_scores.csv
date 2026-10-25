@@ -1,0 +1,6 @@
+system,docs,rouge1_f,rouge2_f,rougeL_f,mean_words
+lead-3 (same docs),40,0.3059,0.101,0.2017,56.5
+lead-3 (all test docs),200,0.346,0.14,0.224,66.8
+LLM short (~50 words),40,0.371,0.1324,0.2521,49.3
+LLM medium (~120 words),40,0.2965,0.1065,0.1904,123.5
+LLM long (~250 words),40,0.2205,0.0865,0.1483,225.9
