@@ -36,8 +36,9 @@ tr, img { page-break-inside: avoid; }
 
 
 def main() -> None:
-    """Build the PDF."""
-    text = (REPORTS / "REPORT.md").read_text(encoding="utf-8")
+    """Build the PDF (default: REPORT.md; pass another file name in reports/ to export it)."""
+    source = REPORTS / (sys.argv[1] if len(sys.argv) > 1 else "REPORT.md")
+    text = source.read_text(encoding="utf-8")
     text = re.sub(r"```mermaid.*?```", "![Architecture](figures/architecture.png)", text, flags=re.S)
     body = markdown.markdown(text, extensions=["tables", "fenced_code", "sane_lists"])
     head = f"<meta charset='utf-8'><style>{CSS}</style>"
@@ -47,7 +48,7 @@ def main() -> None:
     browser = next((b for b in BROWSERS if Path(b).exists()), None)
     if browser is None:
         sys.exit("No Edge or Chrome found for PDF export.")
-    pdf = REPORTS / "REPORT.pdf"
+    pdf = source.with_suffix(".pdf")
     subprocess.run(
         [
             browser,
