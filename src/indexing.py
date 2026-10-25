@@ -72,7 +72,11 @@ def load_embedder(cfg: Config) -> Any:
     """Load the sentence-transformers model named in the config."""
     from sentence_transformers import SentenceTransformer
 
-    model = SentenceTransformer(cfg.get("embedding.model_name"), device=get_device())
+    name, device = cfg.get("embedding.model_name"), get_device()
+    try:  # prefer the local cache: avoids network round-trips once the model is downloaded
+        model = SentenceTransformer(name, device=device, local_files_only=True)
+    except OSError:
+        model = SentenceTransformer(name, device=device)
     model.max_seq_length = int(cfg.get("embedding.max_seq_length"))
     return model
 

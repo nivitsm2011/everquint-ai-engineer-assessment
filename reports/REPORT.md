@@ -86,3 +86,35 @@ checkpointed every 5,000 chunks so an interrupted run resumes.
 
 All three are covered by unit tests (each finds a vector's own nearest neighbour). Their recall and speed
 at this corpus size are not measured yet; that comparison belongs to the evaluation phase.
+
+## 3. Search
+
+`src/search.py` exposes `search(query, top_n, method, page, page_size)` (defaults from `config.yaml`:
+5 documents, `hybrid`, page size 5) and a `SearchEngine` class that loads the indexes once.
+
+- **Query handling:** the query goes through the same preprocessing as the corpus for the lexical path
+  (lowercase, tokenise, drop stopwords); an all-stopword query falls back to its plain tokens. The dense
+  path embeds the raw query with the same MiniLM model and compares against the FAISS index.
+- **Methods:** `bm25`, `tfidf`, `dense`, and `hybrid` = weighted Reciprocal Rank Fusion of the BM25 and
+  dense rankings, `score = sum_i w_i / (60 + rank_i)`, with `w` from `search.weights` (0.5 / 0.5). RRF uses
+  ranks, not raw scores, so BM25 (unbounded) and cosine (0-1) need no calibration. Each retriever
+  contributes its top 100 chunks (`search.candidate_pool`).
+- **Document level:** chunk hits are grouped by document; a document's score is its best chunk's score
+  and it is returned once. Hybrid scores are small (~0.016 at most with k=60) and are only comparable
+  within one query; BM25, TF-IDF and cosine scores are on different scales too.
+- **Excerpts:** each result carries up to 2 matching chunks, trimmed to the 60-word window with the most
+  query-term hits, with matched words wrapped in `**` (whole-word, case-insensitive, plural-tolerant).
+  The Streamlit UI can render this as bold.
+- **Pagination:** `top_n` documents are retrieved, then `page`/`page_size` slice them; a page past the end
+  returns `[]`.
+
+Sample runs (3 queries x 4 methods, `top_n=3`) are saved in `reports/sample_queries.txt`. Observations
+(qualitative only; quantitative comparison comes in the evaluation phase):
+
+- Keyword-heavy query ("Obama health care reform"): all methods agree on the top articles; BM25 and TF-IDF
+  favour long articles that repeat the terms, dense favours articles whose opening is about the topic.
+- Paraphrase-style query ("tropical storm causes flooding and evacuations"): dense surfaces flood stories
+  from Vietnam and the Philippines that BM25 misses, while BM25 surfaces a Florida storm story the dense
+  model ranks lower; hybrid mixes both.
+- Known weakness: a few CNN Student News items have a date line as their "title" (e.g. "October 29, 2009 .")
+  because the title is the first sentence. This is a data-quality issue to revisit, not a search bug.

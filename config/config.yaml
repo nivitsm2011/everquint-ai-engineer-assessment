@@ -27,7 +27,7 @@ corpus:
   chunk_overlap: 40          # approx. words shared between neighbouring chunks
 
 search:
-  top_n: 10
+  top_n: 5
   candidate_pool: 100        # candidates taken from each retriever before fusion
   mode: hybrid               # bm25 | dense | hybrid
   rrf_k: 60                  # reciprocal-rank-fusion constant
@@ -35,6 +35,7 @@ search:
     bm25: 0.5
     dense: 0.5
   excerpt_words: 60
+  excerpts_per_doc: 2
   page_size: 5
 
 embedding:

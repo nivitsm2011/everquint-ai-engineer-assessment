@@ -10,7 +10,7 @@ from src.llm import OllamaClient, OpenAIClient, get_llm
 
 def test_config_loads() -> None:
     cfg = load_config()
-    assert cfg.get("search.top_n") == 10
+    assert cfg.get("search.top_n") == 5
     assert cfg.get("missing.key", "fallback") == "fallback"
 
 
