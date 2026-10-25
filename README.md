@@ -38,7 +38,8 @@ streamlit run app/streamlit_app.py        # web UI (start `ollama serve` first f
 
 ## Status
 
-Phases 0-6 complete; see `reports/REPORT.md` for results.
+Phases 0-8 complete; see `reports/REPORT.md` for results. The fine-tuned embedding model
+(`scripts/finetune_embeddings.py`) is optional and off by default (`finetune.enabled` in the config).
 
 ## Checks
 
