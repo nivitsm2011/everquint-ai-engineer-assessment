@@ -1,0 +1,66 @@
+# Single source of truth for all settings. Secrets live in .env, never here.
+
+paths:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  index_dir: indexes
+  reports_dir: reports
+  chunks_file: data/processed/chunks.parquet
+  bm25_index: indexes/bm25.pkl
+  tfidf_index: indexes/tfidf.pkl
+  faiss_index: indexes/dense.faiss
+  embeddings_file: indexes/embeddings.npy
+
+corpus:
+  dataset_name: ccdv/arxiv-summarization   # placeholder; finalised in the data phase
+  dataset_split: train
+  max_documents: 5000        # keep the corpus laptop-sized
+  min_chars: 500
+  chunk_size: 200            # words per chunk
+  chunk_overlap: 40          # words shared between neighbouring chunks
+
+search:
+  top_n: 10
+  candidate_pool: 100        # candidates taken from each retriever before fusion
+  mode: hybrid               # bm25 | dense | hybrid
+  rrf_k: 60                  # reciprocal-rank-fusion constant
+  weights:
+    bm25: 0.5
+    dense: 0.5
+  excerpt_words: 60
+  page_size: 5
+
+embedding:
+  model_name: sentence-transformers/all-MiniLM-L6-v2
+  batch_size: 64
+  normalize: true
+
+llm:
+  provider: ollama           # openai | ollama
+  timeout_seconds: 120
+  max_retries: 3
+  temperature: 0.2
+  openai:
+    model: gpt-4o-mini
+    api_key_env: OPENAI_API_KEY
+  ollama:
+    model: llama3.2:3b
+    host: http://localhost:11434
+
+summary:
+  lengths:                   # target words per length choice
+    short: 50
+    medium: 120
+    long: 250
+  default_length: medium
+  max_context_chars: 12000
+
+evaluation:
+  seed: 42
+  test_docs: 200
+  queries_per_doc: 1
+  k_values: [1, 3, 5, 10]
+  human_eval_samples: 20
+
+logging:
+  level: INFO
