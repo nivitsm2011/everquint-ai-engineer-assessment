@@ -5,19 +5,25 @@ paths:
   processed_dir: data/processed
   index_dir: indexes
   reports_dir: reports
+  documents_file: data/processed/documents.parquet
   chunks_file: data/processed/chunks.parquet
+  heldout_file: data/processed/heldout.parquet
+  stats_file: reports/data_stats.json
   bm25_index: indexes/bm25.pkl
   tfidf_index: indexes/tfidf.pkl
   faiss_index: indexes/dense.faiss
   embeddings_file: indexes/embeddings.npy
 
 corpus:
-  dataset_name: ccdv/arxiv-summarization   # placeholder; finalised in the data phase
-  dataset_split: train
-  max_documents: 5000        # keep the corpus laptop-sized
-  min_chars: 500
-  chunk_size: 200            # words per chunk
-  chunk_overlap: 40          # words shared between neighbouring chunks
+  dataset_name: abisee/cnn_dailymail
+  config_name: "3.0.0"
+  train_docs: 20000          # searchable corpus size (train split); scale up here
+  heldout_docs: 1000         # evaluation pool (test split), never mixed into the corpus
+  min_words: 50              # drop articles shorter than this after cleaning
+  near_dup_head_words: 40    # articles sharing their first N normalised words are near-duplicates
+  title_max_chars: 150
+  chunk_size: 200            # target words per chunk (sentence-aware)
+  chunk_overlap: 40          # approx. words shared between neighbouring chunks
 
 search:
   top_n: 10

@@ -1,0 +1,91 @@
+2026-10-25 10:13:59,281 INFO src.data_prep: Preparing 20000 corpus articles from the train split
+2026-10-25 10:16:21,295 INFO src.data_prep: [d] outlet_dateline         1006 docs
+2026-10-25 10:16:21,295 INFO src.data_prep: [d] email_to_friend         1273 docs
+2026-10-25 10:16:21,295 INFO src.data_prep: [d] whitespace              6405 docs
+2026-10-25 10:16:21,296 INFO src.data_prep: [d] cnn_dateline           20009 docs
+2026-10-25 10:16:21,296 INFO src.data_prep: [d] urls                     273 docs
+2026-10-25 10:16:21,296 INFO src.data_prep: [d] unicode_nfkc             225 docs
+2026-10-25 10:16:21,296 INFO src.data_prep: [d] cnn_dateline_inline       20 docs
+2026-10-25 10:16:21,296 INFO src.data_prep: [d] html_unescape             16 docs
+2026-10-25 10:16:21,296 INFO src.data_prep: [d] html_tags                  1 docs
+2026-10-25 10:16:21,296 INFO src.data_prep: [d] DROP exact_duplicate    1360 docs
+2026-10-25 10:16:21,296 INFO src.data_prep: [d] DROP too_short             8 docs
+2026-10-25 10:16:21,296 INFO src.data_prep: [d] DROP near_duplicate      122 docs
+2026-10-25 10:16:21,296 INFO src.data_prep: [d] read 21490 rows -> kept 20000 docs
+2026-10-25 10:16:21,336 INFO src.data_prep: Preparing 1000 held-out articles from the test split
+2026-10-25 10:16:36,731 INFO src.data_prep: [h] cnn_dateline             972 docs
+2026-10-25 10:16:36,731 INFO src.data_prep: [h] whitespace               356 docs
+2026-10-25 10:16:36,731 INFO src.data_prep: [h] unicode_nfkc              22 docs
+2026-10-25 10:16:36,731 INFO src.data_prep: [h] urls                       6 docs
+2026-10-25 10:16:36,731 INFO src.data_prep: [h] outlet_dateline            1 docs
+2026-10-25 10:16:36,731 INFO src.data_prep: [h] DROP exact_duplicate       1 docs
+2026-10-25 10:16:36,731 INFO src.data_prep: [h] read 1001 rows -> kept 1000 docs
+2026-10-25 10:17:04,161 INFO src.data_prep: Wrote C:\DocSearchLLM\doc-search-summarizer\reports\data_stats.json
+{
+  "dataset": "abisee/cnn_dailymail (3.0.0)",
+  "settings": {
+    "train_docs": 20000,
+    "heldout_docs": 1000,
+    "min_words": 50,
+    "chunk_size": 200,
+    "chunk_overlap": 40
+  },
+  "corpus": {
+    "documents": 20000,
+    "words_per_doc_mean": 593.2,
+    "words_per_doc_median": 528.0,
+    "words_per_doc_min": 55,
+    "words_per_doc_max": 1824,
+    "reference_summary_words_mean": 44.5,
+    "chunks": 77338,
+    "chunks_per_doc_mean": 3.87,
+    "words_per_chunk_mean": 192.0,
+    "words_per_chunk_max": 548,
+    "cleaning_audit": {
+      "rows_read": 21490,
+      "docs_kept": 20000,
+      "docs_modified_by_step": {
+        "outlet_dateline": 1006,
+        "email_to_friend": 1273,
+        "whitespace": 6405,
+        "cnn_dateline": 20009,
+        "urls": 273,
+        "unicode_nfkc": 225,
+        "cnn_dateline_inline": 20,
+        "html_unescape": 16,
+        "html_tags": 1
+      },
+      "docs_dropped": {
+        "exact_duplicate": 1360,
+        "too_short": 8,
+        "near_duplicate": 122
+      },
+      "total_words_before_cleaning_of_read_rows": 12843994,
+      "total_words_after_cleaning_of_kept_docs": 11864717
+    }
+  },
+  "heldout": {
+    "documents": 1000,
+    "words_per_doc_mean": 622.7,
+    "words_per_doc_median": 565.0,
+    "words_per_doc_min": 73,
+    "words_per_doc_max": 1749,
+    "reference_summary_words_mean": 34.5,
+    "cleaning_audit": {
+      "rows_read": 1001,
+      "docs_kept": 1000,
+      "docs_modified_by_step": {
+        "cnn_dateline": 972,
+        "whitespace": 356,
+        "unicode_nfkc": 22,
+        "urls": 6,
+        "outlet_dateline": 1
+      },
+      "docs_dropped": {
+        "exact_duplicate": 1
+      },
+      "total_words_before_cleaning_of_read_rows": 623301,
+      "total_words_after_cleaning_of_kept_docs": 622739
+    }
+  }
+}

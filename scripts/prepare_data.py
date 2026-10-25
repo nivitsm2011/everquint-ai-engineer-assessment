@@ -1,7 +1,8 @@
-"""CLI: download, clean, chunk and save the corpus."""
+"""CLI: download (streamed), clean, chunk and save the corpus; prints corpus statistics."""
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -13,7 +14,8 @@ from src.data_prep import prepare  # noqa: E402
 
 def main() -> None:
     """Entry point."""
-    prepare(load_config())
+    stats = prepare(load_config())
+    sys.stdout.write(json.dumps(stats, indent=2) + "\n")
 
 
 if __name__ == "__main__":
