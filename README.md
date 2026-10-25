@@ -39,3 +39,11 @@ streamlit run app/streamlit_app.py        # web UI (start `ollama serve` first f
 ## Status
 
 Phases 0-6 complete; see `reports/REPORT.md` for results.
+
+## Checks
+
+```powershell
+python -m pytest
+python -m ruff check .
+python -m black --check .
+```

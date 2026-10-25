@@ -59,9 +59,11 @@ class SuggestIndex:
 def build_suggest_index(cfg: Config) -> SuggestIndex:
     """Build phrases from frequent 1-3 word n-grams of the corpus plus all document titles."""
     docs = pd.read_parquet(cfg.path("paths.documents_file"), columns=["title", "bm25_text"])
-    thresholds = {1: int(cfg.get("suggest.min_count_unigram")),
-                  2: int(cfg.get("suggest.min_count_bigram")),
-                  3: int(cfg.get("suggest.min_count_trigram"))}
+    thresholds = {
+        1: int(cfg.get("suggest.min_count_unigram")),
+        2: int(cfg.get("suggest.min_count_bigram")),
+        3: int(cfg.get("suggest.min_count_trigram")),
+    }
     counts: dict[int, Counter[str]] = {n: Counter() for n in thresholds}
     for text in docs["bm25_text"]:
         tokens = text.split()
@@ -69,8 +71,9 @@ def build_suggest_index(cfg: Config) -> SuggestIndex:
             counts[n].update(" ".join(tokens[i : i + n]) for i in range(len(tokens) - n + 1))
     phrases: dict[str, int] = {}
     for n, counter in counts.items():
-        phrases.update({p: c for p, c in counter.items()
-                        if c >= thresholds[n] and all(len(w) > 1 for w in p.split())})  # drops "obama s"
+        phrases.update(
+            {p: c for p, c in counter.items() if c >= thresholds[n] and all(len(w) > 1 for w in p.split())}
+        )  # drops "obama s"
     display: dict[str, str] = {}
     for title in docs["title"]:
         t = title.rstrip(" .…")

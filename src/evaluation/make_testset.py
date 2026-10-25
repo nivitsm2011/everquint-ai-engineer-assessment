@@ -52,8 +52,9 @@ def _prompt(article: str, note: str = "") -> str:
     )
 
 
-def generate_query(doc_id: str, text: str, cfg: Config, llm: LLMClient, cache: DiskCache,
-                   doc_words: int | None = None) -> str:
+def generate_query(
+    doc_id: str, text: str, cfg: Config, llm: LLMClient, cache: DiskCache, doc_words: int | None = None
+) -> str:
     """Generate (and cache) one query for a document; retry once if it copies the article."""
     key = f"{doc_id}|{llm.provider}|{llm.model}|q1"
     hit = cache.get(key)
@@ -64,10 +65,13 @@ def generate_query(doc_id: str, text: str, cfg: Config, llm: LLMClient, cache: D
     query = clean_query(llm.generate(_prompt(article), QUERY_SYSTEM, max_tokens=40), max_words)
     if not query or longest_copied_run(query, text) >= max_run:
         log.info("query for %s copied the article or was empty; retrying", doc_id)
-        query = clean_query(
-            llm.generate(_prompt(article, " Use different words than the article."), QUERY_SYSTEM, 40),
-            max_words,
-        ) or query
+        query = (
+            clean_query(
+                llm.generate(_prompt(article, " Use different words than the article."), QUERY_SYSTEM, 40),
+                max_words,
+            )
+            or query
+        )
     cache.set(key, {"query": query})
     return query
 

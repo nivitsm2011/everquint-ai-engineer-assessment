@@ -7,8 +7,9 @@ import hashlib
 import json
 import logging
 import time
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable, TypeVar
+from typing import Any, TypeVar
 
 F = TypeVar("F", bound=Callable[..., Any])
 

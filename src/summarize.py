@@ -242,8 +242,10 @@ class Summarizer:
         if estimate_tokens(text, self.tpw) <= self.budget:
             return self._generate(self._single_prompt(text, words), words)
         log.info("document exceeds %d tokens; summarizing in segments", self.budget)
-        partial = [self._generate(self._single_prompt(s, self.map_words), self.map_words)
-                   for s in self._segments(text)]
+        partial = [
+            self._generate(self._single_prompt(s, self.map_words), self.map_words)
+            for s in self._segments(text)
+        ]
         return self._reduce(partial, words)
 
     # -- cache -----------------------------------------------------------------------------------
@@ -268,12 +270,27 @@ class Summarizer:
         if self.cfg.get("summary.use_cache"):
             self.cache.set(key, value)
 
-    def _make(self, text: str, words: int, ids: list[str], t0: float, calls0: int,
-              per_doc: dict[str, str] | None = None, cached: bool = False) -> Summary:
+    def _make(
+        self,
+        text: str,
+        words: int,
+        ids: list[str],
+        t0: float,
+        calls0: int,
+        per_doc: dict[str, str] | None = None,
+        cached: bool = False,
+    ) -> Summary:
         return Summary(
-            text=text, target_words=words, word_count=len(text.split()), doc_ids=ids,
-            model=self.llm.model, provider=self.llm.provider, per_doc=per_doc or {},
-            llm_calls=self._calls - calls0, cached=cached, seconds=round(time.perf_counter() - t0, 2),
+            text=text,
+            target_words=words,
+            word_count=len(text.split()),
+            doc_ids=ids,
+            model=self.llm.model,
+            provider=self.llm.provider,
+            per_doc=per_doc or {},
+            llm_calls=self._calls - calls0,
+            cached=cached,
+            seconds=round(time.perf_counter() - t0, 2),
         )
 
     # -- public API ------------------------------------------------------------------------------

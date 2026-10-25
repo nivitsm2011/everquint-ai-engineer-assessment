@@ -313,3 +313,27 @@ Search accuracy on the same 200 test queries (`reports/embedding_comparison.csv`
   style as the test queries, which probably helps; real user queries may benefit less.
 - Cost and benefit: 300 LLM-written queries took about 55 min and the re-embedding about 36 min, for roughly
   +3 points of MRR. The fine-tuned model is not enabled by default (`finetune.enabled: false`).
+
+## 8. Quality
+
+- **Tests:** `python -m pytest` runs 64 tests in about 30 s (no network, no LLM, no real indexes; the LLM is a fake
+  client and search uses a tiny synthetic corpus with a bag-of-words embedder). Coverage of the required areas:
+
+| Area | Tests |
+|---|---|
+| Cleaning (datelines, boilerplate, URLs/HTML, duplicates, short docs) | `tests/test_data_prep.py` |
+| Chunking (sentence-aware, overlap, nothing lost) | `tests/test_data_prep.py` |
+| BM25 / TF-IDF / dense / hybrid return ranked, one-per-document results | `tests/test_search.py` |
+| RRF fusion maths and weights | `tests/test_search.py` |
+| Pagination (API and UI helpers) | `tests/test_search.py`, `tests/test_ui_helpers.py` |
+| Summary length control with a mocked LLM (retry, trim, map-reduce, cache) | `tests/test_summarize.py` |
+| ROUGE, lead-3, retrieval metrics, human-sheet scoring | `tests/test_evaluation.py` |
+| LLM clients (missing key, Ollama down, retries with backoff) | `tests/test_summarize.py` |
+| FAISS flat/IVF/HNSW, embedding-variant switch, suggestions | `tests/test_indexing.py`, `tests/test_finetune.py`, `tests/test_suggest.py` |
+
+- **Style:** `black` (line length 110) and `ruff` (rules E, F, W, I, B, UP and T20, which forbids `print`) both pass
+  on the whole repository; settings are in `pyproject.toml`. Library code in `src/` logs through `logging`
+  (`src/utils.get_logger`); command-line scripts write output with `sys.stdout`.
+- **Dependencies:** every line in `requirements.txt` is pinned with `==`, and `pip check` reports no conflicts.
+  Python 3.11 was used.
+- Run the checks with `python -m ruff check .`, `python -m black --check .` and `python -m pytest`.

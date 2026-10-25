@@ -149,7 +149,10 @@ def test_openai_requires_key(cfg: Config, monkeypatch: pytest.MonkeyPatch) -> No
 
 
 def test_ollama_not_running_gives_clear_error(cfg: Config) -> None:
-    cfg.data["llm"] = {**cfg.data["llm"], "ollama": {**cfg.data["llm"]["ollama"], "host": "http://127.0.0.1:9"}}
+    cfg.data["llm"] = {
+        **cfg.data["llm"],
+        "ollama": {**cfg.data["llm"]["ollama"], "host": "http://127.0.0.1:9"},
+    }
     with pytest.raises(LLMUnavailableError, match="ollama serve"):
         OllamaClient(cfg).generate("hi")
 

@@ -9,7 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -51,18 +51,23 @@ def main() -> None:
         res = evaluate_summaries(cfg)
         summary["summary"] = res
         _show("ROUGE F1", pd.read_csv(cfg.path("paths.summary_scores_file")))
-        sys.stdout.write(f"\nHuman-evaluation sheet: {cfg.path('paths.human_eval_file')} "
-                         f"({res['human_eval_rows']} rows)\n")
+        sys.stdout.write(
+            f"\nHuman-evaluation sheet: {cfg.path('paths.human_eval_file')} "
+            f"({res['human_eval_rows']} rows)\n"
+        )
     if "latency" in args.stages:
         lat = measure_latency(cfg)
         summary["latency"] = json.loads(lat.to_json(orient="records"))
         _show("Latency", lat)
 
     llm = get_llm(cfg)
-    summary["run"] = {"finished_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                      "llm": f"{llm.provider}/{llm.model}", "embedding": cfg.get("embedding.model_name"),
-                      "test_docs": cfg.get("evaluation.test_docs"),
-                      "summary_eval_docs": cfg.get("evaluation.summary_eval_docs")}
+    summary["run"] = {
+        "finished_utc": datetime.now(UTC).isoformat(timespec="seconds"),
+        "llm": f"{llm.provider}/{llm.model}",
+        "embedding": cfg.get("embedding.model_name"),
+        "test_docs": cfg.get("evaluation.test_docs"),
+        "summary_eval_docs": cfg.get("evaluation.summary_eval_docs"),
+    }
     out_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
     sys.stdout.write(f"\nWrote {out_path}\n")
 

@@ -28,9 +28,16 @@ def make_pairs(cfg: Config) -> pd.DataFrame:
     pool = docs[~docs["doc_id"].isin(test_ids)]
     rng = np.random.default_rng(int(ft["seed"]))
     sample = pool.iloc[np.sort(rng.choice(len(pool), size=int(ft["num_pairs"]), replace=False))]
-    chunks = pd.read_parquet(cfg.path("paths.chunks_file"), columns=["chunk_id", "doc_id", "position", "text"])
-    first = dict(zip(chunks.loc[chunks["position"] == 0, "doc_id"], chunks.loc[chunks["position"] == 0, "text"],
-                     strict=True))
+    chunks = pd.read_parquet(
+        cfg.path("paths.chunks_file"), columns=["chunk_id", "doc_id", "position", "text"]
+    )
+    first = dict(
+        zip(
+            chunks.loc[chunks["position"] == 0, "doc_id"],
+            chunks.loc[chunks["position"] == 0, "text"],
+            strict=True,
+        )
+    )
     llm, cache = get_llm(cfg), DiskCache(cfg.path("paths.cache_dir") / "train_queries")
     rows = []
     for i, (doc_id, text) in enumerate(zip(sample["doc_id"], sample["text"], strict=True), 1):
@@ -97,8 +104,15 @@ def compare(cfg: Config) -> pd.DataFrame:
     for method in ("dense", "hybrid", "bm25"):
         for metric in [c for c in base.columns if c != "queries"]:
             b, t = float(base.at[method, metric]), float(tuned.at[method, metric])
-            rows.append({"method": method, "metric": metric, "base": round(b, 4),
-                         "finetuned": round(t, 4), "delta": round(t - b, 4)})
+            rows.append(
+                {
+                    "method": method,
+                    "metric": metric,
+                    "base": round(b, 4),
+                    "finetuned": round(t, 4),
+                    "delta": round(t - b, 4),
+                }
+            )
     table = pd.DataFrame(rows)
     out = cfg.path("finetune.comparison_file")
     table.to_csv(out, index=False)

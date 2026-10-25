@@ -19,7 +19,9 @@ def test_cnn_dateline_removed() -> None:
 
 
 def test_midtext_and_partner_datelines_removed() -> None:
-    assert clean_text("Teaser line here. MIAMI, Florida (CNN) -- The floor.") == "Teaser line here. The floor."
+    assert (
+        clean_text("Teaser line here. MIAMI, Florida (CNN) -- The floor.") == "Teaser line here. The floor."
+    )
     assert clean_text("Teaser. NEW YORK (CNN) -- Hi there.") == "Teaser. Hi there."
     assert clean_text("(Travel + Leisure) -- It is nice.") == "It is nice."
     assert clean_text("(Mashable) -- Apple did it.") == "Apple did it."

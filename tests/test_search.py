@@ -47,7 +47,9 @@ def engine(tmp_path: Path) -> SearchEngine:
     rows = []
     for doc_id, text in TOPICS.items():  # two chunks per doc so aggregation is exercised
         rows.append({"chunk_id": f"{doc_id}_c00", "doc_id": doc_id, "title": text[:30], "text": text})
-        rows.append({"chunk_id": f"{doc_id}_c01", "doc_id": doc_id, "title": text[:30], "text": "Filler words only."})
+        rows.append(
+            {"chunk_id": f"{doc_id}_c01", "doc_id": doc_id, "title": text[:30], "text": "Filler words only."}
+        )
     chunks = pd.DataFrame(rows)
     chunks["bm25_text"] = chunks["text"].map(bm25_normalize)
     ix.build_bm25(chunks, cfg)
@@ -71,6 +73,22 @@ def test_document_score_is_best_chunk_and_excerpts_highlight(engine: SearchEngin
     assert {r.doc_id for r in res} == {"d0", "d3"}
     assert "**football**" in res[0].excerpts[0].highlighted.lower()
     assert res[0].score >= res[1].score
+
+
+@pytest.mark.parametrize("method", ["bm25", "tfidf", "dense", "hybrid"])
+def test_results_are_ranked_best_first(engine: SearchEngine, method: str) -> None:
+    res = engine.search("football team championship", top_n=4, method=method)
+    scores = [r.score for r in res]
+    assert scores == sorted(scores, reverse=True) and len(scores) >= 2
+    assert [r.rank for r in res] == list(range(1, len(res) + 1))
+
+
+def test_hybrid_combines_both_rankers(engine: SearchEngine) -> None:
+    """A document found by only one ranker still appears in the hybrid results."""
+    hybrid = {r.doc_id for r in engine.search("striker scored", top_n=4, method="hybrid")}
+    bm25 = {r.doc_id for r in engine.search("striker scored", top_n=4, method="bm25")}
+    dense = {r.doc_id for r in engine.search("striker scored", top_n=4, method="dense")}
+    assert hybrid == bm25 | dense
 
 
 def test_pagination(engine: SearchEngine) -> None:

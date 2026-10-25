@@ -26,8 +26,12 @@ METHOD_LABELS = {
     "tfidf": "TF-IDF (keywords)",
     "dense": "Dense (embeddings)",
 }
-LENGTH_LABELS = {"short": "Short (~50 words)", "medium": "Medium (~120 words)",
-                 "long": "Long (~250 words)", "custom": "Custom"}
+LENGTH_LABELS = {
+    "short": "Short (~50 words)",
+    "medium": "Medium (~120 words)",
+    "long": "Long (~250 words)",
+    "custom": "Custom",
+}
 
 st.set_page_config(page_title="Document Search & Summarizer", page_icon="🔎", layout="wide")
 
@@ -64,14 +68,18 @@ def go_to(page: int) -> None:
 # --- page ------------------------------------------------------------------------------------------
 cfg = load_config()
 st.title("🔎 Document Search & Summarizer")
-st.caption("Hybrid keyword + embedding search over ~20,000 news articles, with LLM summaries "
-           "that use only the retrieved articles.")
+st.caption(
+    "Hybrid keyword + embedding search over ~20,000 news articles, with LLM summaries "
+    "that use only the retrieved articles."
+)
 
 try:
     engine, summarizer, _ = get_resources()
 except FileNotFoundError as exc:
-    st.error("The data or indexes are missing. Run `python scripts/prepare_data.py` and then "
-             f"`python scripts/build_index.py`, and reload this page.\n\nDetails: {exc}")
+    st.error(
+        "The data or indexes are missing. Run `python scripts/prepare_data.py` and then "
+        f"`python scripts/build_index.py`, and reload this page.\n\nDetails: {exc}"
+    )
     st.stop()
 except Exception as exc:  # noqa: BLE001 - show a readable message instead of a stack trace
     st.error(f"Could not start the search engine: {exc}")
@@ -90,13 +98,21 @@ with st.sidebar:
     else:
         length = length_choice
     max_docs = int(cfg.get("app.max_summary_docs"))
-    st.caption(f"LLM: {summarizer.llm_name}  \nSummaries cover the top {max_docs} results at most "
-               "(a local CPU model needs about a minute per article).")
+    st.caption(
+        f"LLM: {summarizer.llm_name}  \nSummaries cover the top {max_docs} results at most "
+        "(a local CPU model needs about a minute per article)."
+    )
 
 st.session_state.setdefault("recent", [])
 st.session_state.setdefault("page", 1)
-query = st_searchbox(suggestions, key="searchbox", placeholder="Type to search, e.g. “tropical storm flooding”…",
-                     clear_on_submit=False, edit_after_submit="current", default_use_searchterm=False)
+query = st_searchbox(
+    suggestions,
+    key="searchbox",
+    placeholder="Type to search, e.g. “tropical storm flooding”…",
+    clear_on_submit=False,
+    edit_after_submit="current",
+    default_use_searchterm=False,
+)
 
 if query and query != st.session_state.get("last_query"):
     st.session_state.last_query = query
@@ -107,8 +123,10 @@ if query and query != st.session_state.get("last_query"):
 
 query = st.session_state.get("last_query")
 if not query:
-    st.info("Start typing in the box above. Suggestions come from article titles and common phrases; "
-            "press Enter to search.")
+    st.info(
+        "Start typing in the box above. Suggestions come from article titles and common phrases; "
+        "press Enter to search."
+    )
     st.stop()
 
 try:
@@ -136,19 +154,25 @@ for r in slice_page(results, page, page_size):
 
 prev_col, mid_col, next_col = st.columns([1, 2, 1])
 prev_col.button("← Previous", disabled=page <= 1, on_click=go_to, args=(page - 1,), use_container_width=True)
-mid_col.markdown(f"<div style='text-align:center;padding-top:6px'>Page <b>{page}</b> of <b>{pages}</b></div>",
-                 unsafe_allow_html=True)
+mid_col.markdown(
+    f"<div style='text-align:center;padding-top:6px'>Page <b>{page}</b> of <b>{pages}</b></div>",
+    unsafe_allow_html=True,
+)
 next_col.button("Next →", disabled=page >= pages, on_click=go_to, args=(page + 1,), use_container_width=True)
 
 # --- summary ---------------------------------------------------------------------------------------
 st.divider()
 to_summarize = [r.doc_id for r in results[:max_docs]]
 run_key = (query, method, top_n, str(length), tuple(to_summarize))
-label = f"{length} words" if isinstance(length, int) else f"{length}, ~{cfg.get('summary.lengths')[length]} words"
+label = (
+    f"{length} words" if isinstance(length, int) else f"{length}, ~{cfg.get('summary.lengths')[length]} words"
+)
 if st.button(f"✨ Summarize results ({label})", type="primary"):
     try:
-        with st.spinner(f"Summarizing {len(to_summarize)} articles with {summarizer.llm_name}… "
-                        "this can take a minute or two on CPU."):
+        with st.spinner(
+            f"Summarizing {len(to_summarize)} articles with {summarizer.llm_name}… "
+            "this can take a minute or two on CPU."
+        ):
             st.session_state.summary = (run_key, summarizer.summarize_documents(to_summarize, length))
     except LLMError as exc:
         st.session_state.summary = None
@@ -162,5 +186,7 @@ if saved and saved[0] == run_key:
     s = saved[1]
     st.subheader("Summary")
     st.write(md_escape(s.text))
-    st.caption(f"{s.word_count} words (target {s.target_words}) · {len(s.doc_ids)} articles · "
-               f"took {s.seconds:.1f} s{' (from cache)' if s.cached else ''} · {s.provider}/{s.model}")
+    st.caption(
+        f"{s.word_count} words (target {s.target_words}) · {len(s.doc_ids)} articles · "
+        f"took {s.seconds:.1f} s{' (from cache)' if s.cached else ''} · {s.provider}/{s.model}"
+    )

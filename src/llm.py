@@ -63,8 +63,14 @@ class LLMClient(ABC):
                 last = exc
                 if attempt < self.max_retries:
                     wait = min(self.backoff * 2 ** (attempt - 1), 30.0)
-                    log.warning("%s attempt %d/%d failed (%s); retrying in %.1fs",
-                                self.provider, attempt, self.max_retries, exc, wait)
+                    log.warning(
+                        "%s attempt %d/%d failed (%s); retrying in %.1fs",
+                        self.provider,
+                        attempt,
+                        self.max_retries,
+                        exc,
+                        wait,
+                    )
                     time.sleep(wait)
         raise LLMError(f"{self.provider} request failed after {self.max_retries} attempts: {last}")
 
@@ -100,8 +106,12 @@ class OpenAIClient(LLMClient):
             )
         except openai.AuthenticationError as exc:
             raise LLMConfigError(f"OpenAI rejected the API key: {exc}") from exc
-        except (openai.APITimeoutError, openai.APIConnectionError, openai.RateLimitError,
-                openai.InternalServerError) as exc:
+        except (
+            openai.APITimeoutError,
+            openai.APIConnectionError,
+            openai.RateLimitError,
+            openai.InternalServerError,
+        ) as exc:
             raise _Retryable(type(exc).__name__) from exc
         except openai.APIError as exc:
             raise LLMError(f"OpenAI error: {exc}") from exc

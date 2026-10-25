@@ -6,8 +6,14 @@ from src.suggest import SuggestIndex
 
 
 def make() -> SuggestIndex:
-    phrases = {"hurricane": 90, "hurricane season": 40, "hurricane katrina": 70, "hunger": 10,
-               "tropical storm": 50, "the quick brown fox": 1}
+    phrases = {
+        "hurricane": 90,
+        "hurricane season": 40,
+        "hurricane katrina": 70,
+        "hunger": 10,
+        "tropical storm": 50,
+        "the quick brown fox": 1,
+    }
     return SuggestIndex(phrases, {"the quick brown fox": "The quick brown fox"})
 
 

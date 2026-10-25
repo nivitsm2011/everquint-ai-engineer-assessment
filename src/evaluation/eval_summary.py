@@ -19,8 +19,19 @@ from src.utils import get_logger
 log = get_logger(__name__)
 ROUGE_TYPES = ["rouge1", "rouge2", "rougeL"]
 HUMAN_CRITERIA = ["coherence", "coverage", "faithfulness", "conciseness"]
-DETAIL_COLS = ["mode", "doc_id", "length", "words", "summary", "word_count", "seconds", "llm_calls",
-               "rouge1_f", "rouge2_f", "rougeL_f"]
+DETAIL_COLS = [
+    "mode",
+    "doc_id",
+    "length",
+    "words",
+    "summary",
+    "word_count",
+    "seconds",
+    "llm_calls",
+    "rouge1_f",
+    "rouge2_f",
+    "rougeL_f",
+]
 
 
 def lead_n(text: str, n: int = 3) -> str:
@@ -52,8 +63,13 @@ def run_single_doc_summaries(cfg: Config, summarizer: Summarizer | None = None) 
     scorer = rouge_scorer.RougeScorer(ROUGE_TYPES, use_stemmer=True)
     path = cfg.path("paths.summary_details_file")
     details = _load_details(path)
-    done = set(zip(details.loc[details["mode"] == "single", "doc_id"],
-                   details.loc[details["mode"] == "single", "length"], strict=True))
+    done = set(
+        zip(
+            details.loc[details["mode"] == "single", "doc_id"],
+            details.loc[details["mode"] == "single", "length"],
+            strict=True,
+        )
+    )
 
     for i, doc_id in enumerate(ids, 1):
         for length in cfg.get("evaluation.summary_lengths"):
@@ -66,10 +82,17 @@ def run_single_doc_summaries(cfg: Config, summarizer: Summarizer | None = None) 
             except LLMError as exc:
                 log.warning("skipping %s/%s: %s", doc_id, length, exc)
                 continue
-            row = {"mode": "single", "doc_id": doc_id, "length": length, "words": s.target_words,
-                   "summary": s.text, "word_count": s.word_count,
-                   "seconds": None if s.cached else s.seconds, "llm_calls": s.llm_calls,
-                   **rouge_f1(scorer, refs[doc_id], s.text)}
+            row = {
+                "mode": "single",
+                "doc_id": doc_id,
+                "length": length,
+                "words": s.target_words,
+                "summary": s.text,
+                "word_count": s.word_count,
+                "seconds": None if s.cached else s.seconds,
+                "llm_calls": s.llm_calls,
+                **rouge_f1(scorer, refs[doc_id], s.text),
+            }
             details = pd.concat([details, pd.DataFrame([row])], ignore_index=True)
             details.to_csv(path, index=False)
         log.info("summarised %d / %d test documents", i, len(ids))
@@ -87,8 +110,9 @@ def rouge_table(cfg: Config, details: pd.DataFrame) -> pd.DataFrame:
         recs = []
         for d in ids:
             cand = lead_n(docs.at[d, "text"])
-            recs.append({**rouge_f1(scorer, docs.at[d, "reference_summary"], cand),
-                         "word_count": len(cand.split())})
+            recs.append(
+                {**rouge_f1(scorer, docs.at[d, "reference_summary"], cand), "word_count": len(cand.split())}
+            )
         return pd.DataFrame(recs)
 
     single = details[details["mode"] == "single"]
@@ -96,9 +120,14 @@ def rouge_table(cfg: Config, details: pd.DataFrame) -> pd.DataFrame:
     rows: list[dict[str, object]] = []
 
     def add(name: str, frame: pd.DataFrame, n: int) -> None:
-        rows.append({"system": name, "docs": n,
-                     **{c: round(float(frame[c].mean()), 4) for c in ("rouge1_f", "rouge2_f", "rougeL_f")},
-                     "mean_words": round(float(frame["word_count"].mean()), 1)})
+        rows.append(
+            {
+                "system": name,
+                "docs": n,
+                **{c: round(float(frame[c].mean()), 4) for c in ("rouge1_f", "rouge2_f", "rougeL_f")},
+                "mean_words": round(float(frame["word_count"].mean()), 1),
+            }
+        )
 
     add("lead-3 (same docs)", lead_rows(ids), len(ids))
     add("lead-3 (all test docs)", lead_rows(testset["doc_id"].tolist()), len(testset))
@@ -111,8 +140,9 @@ def rouge_table(cfg: Config, details: pd.DataFrame) -> pd.DataFrame:
     return table
 
 
-def build_human_eval_sheet(cfg: Config, summarizer: Summarizer | None = None,
-                           engine: SearchEngine | None = None) -> pd.DataFrame:
+def build_human_eval_sheet(
+    cfg: Config, summarizer: Summarizer | None = None, engine: SearchEngine | None = None
+) -> pd.DataFrame:
     """Sample test queries, summarise their retrieved documents, and export a scoring sheet."""
     summarizer = summarizer or Summarizer(cfg)
     engine = engine or SearchEngine(cfg)
@@ -120,7 +150,9 @@ def build_human_eval_sheet(cfg: Config, summarizer: Summarizer | None = None,
     pool = min(int(cfg.get("evaluation.human_eval_pool")), len(testset))
     n = min(int(cfg.get("evaluation.human_eval_samples")), pool)
     # a fixed pool is drawn once; using its first n rows keeps earlier (cached) samples valid
-    pick = np.random.default_rng(int(cfg.get("evaluation.seed")) + 1).choice(len(testset), pool, replace=False)
+    pick = np.random.default_rng(int(cfg.get("evaluation.seed")) + 1).choice(
+        len(testset), pool, replace=False
+    )
     pick = np.sort(pick)[:n]
     length = cfg.get("evaluation.human_eval_length")
     top = int(cfg.get("evaluation.human_eval_top_docs"))
@@ -141,19 +173,40 @@ def build_human_eval_sheet(cfg: Config, summarizer: Summarizer | None = None,
             continue
         key = "+".join(ids)
         if key not in done:
-            details = pd.concat([details, pd.DataFrame([{
-                "mode": "multi", "doc_id": key, "length": length, "words": s.target_words,
-                "summary": s.text, "word_count": s.word_count,
-                "seconds": None if s.cached else s.seconds, "llm_calls": s.llm_calls}])], ignore_index=True)
+            details = pd.concat(
+                [
+                    details,
+                    pd.DataFrame(
+                        [
+                            {
+                                "mode": "multi",
+                                "doc_id": key,
+                                "length": length,
+                                "words": s.target_words,
+                                "summary": s.text,
+                                "word_count": s.word_count,
+                                "seconds": None if s.cached else s.seconds,
+                                "llm_calls": s.llm_calls,
+                            }
+                        ]
+                    ),
+                ],
+                ignore_index=True,
+            )
             details.to_csv(path, index=False)
-        rows.append({
-            "sample_id": k, "query": query,
-            "retrieved_docs": "\n".join(f"{h.doc_id} | {h.title}" for h in hits),
-            "target_in_results": "yes" if target in ids else "no",
-            "source_text": "\n\n".join(f"[{h.doc_id}] {summarizer.store.text(h.doc_id)}" for h in hits),
-            "summary": s.text, "summary_words": s.word_count,
-            **{c: "" for c in HUMAN_CRITERIA}, "comments": "",
-        })
+        rows.append(
+            {
+                "sample_id": k,
+                "query": query,
+                "retrieved_docs": "\n".join(f"{h.doc_id} | {h.title}" for h in hits),
+                "target_in_results": "yes" if target in ids else "no",
+                "source_text": "\n\n".join(f"[{h.doc_id}] {summarizer.store.text(h.doc_id)}" for h in hits),
+                "summary": s.text,
+                "summary_words": s.word_count,
+                **{c: "" for c in HUMAN_CRITERIA},
+                "comments": "",
+            }
+        )
         log.info("human-eval sample %d / %d", k, n)
     sheet = pd.DataFrame(rows)
     sheet.to_csv(cfg.path("paths.human_eval_file"), index=False, encoding="utf-8-sig")
@@ -169,7 +222,9 @@ def score_human_eval(sheet_path: Path) -> dict[str, object]:
     if len(bad):
         raise ValueError(f"Ratings must be between 1 and 5; found {len(bad)} out-of-range values")
     out["rows_scored"] = int(scores.notna().all(axis=1).sum())
-    out["mean_scores"] = {c: round(float(scores[c].mean()), 2) for c in HUMAN_CRITERIA if scores[c].notna().any()}
+    out["mean_scores"] = {
+        c: round(float(scores[c].mean()), 2) for c in HUMAN_CRITERIA if scores[c].notna().any()
+    }
     out["overall_mean"] = round(float(scores.stack().mean()), 2) if scores.notna().any().any() else None
     return out
 

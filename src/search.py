@@ -230,9 +230,7 @@ class SearchEngine:
             excerpts = []
             for row, score in hits[:n_excerpts]:
                 plain, marked = make_excerpt(str(self.chunks["text"].iat[row]), terms, max_words)
-                excerpts.append(
-                    Excerpt(str(self.chunks["chunk_id"].iat[row]), float(score), plain, marked)
-                )
+                excerpts.append(Excerpt(str(self.chunks["chunk_id"].iat[row]), float(score), plain, marked))
             results.append(
                 Result(
                     rank=start + offset + 1,

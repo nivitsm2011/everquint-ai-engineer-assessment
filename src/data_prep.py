@@ -8,7 +8,7 @@ import json
 import re
 import unicodedata
 from collections import Counter
-from collections.abc import Iterable, Iterator
+from collections.abc import Iterable
 from dataclasses import asdict, dataclass
 from typing import Any
 
@@ -23,9 +23,7 @@ log = get_logger(__name__)
 # --- boilerplate patterns (each is counted separately so cleaning can be audited) ---------------
 _DATE = r"\d{1,2}:\d{2}\s*[A-Z]{2,4},\s*\d{1,2}\s+\w+\s+\d{4}"
 BOILERPLATE: dict[str, re.Pattern[str]] = {
-    "daily_mail_byline": re.compile(
-        r"^\s*By\s*\.\s*[^.]{1,80}?\s*\.\s*(?:and\s*\.\s*[^.]{1,80}?\s*\.\s*)?"
-    ),
+    "daily_mail_byline": re.compile(r"^\s*By\s*\.\s*[^.]{1,80}?\s*\.\s*(?:and\s*\.\s*[^.]{1,80}?\s*\.\s*)?"),
     "published_updated": re.compile(
         rf"PUBLISHED:\s*\.\s*{_DATE}\s*\.\s*(?:\|\s*\.\s*)?(?:UPDATED:\s*\.\s*{_DATE}\s*\.\s*)?"
         rf"|UPDATED:\s*\.\s*{_DATE}\s*\.\s*"
@@ -44,8 +42,10 @@ BOILERPLATE: dict[str, re.Pattern[str]] = {
         r"\(CNN[\w ]{0,15}\)\s*(?:--|-)\s*"
     ),
     # syndicated-partner datelines such as "(Mashable) --", "(EW.com) --"
-    "outlet_dateline": re.compile(r"^(?:[A-Z][A-Za-z'-]*(?: [A-Za-z'-]+){0,3}(?:,\s*[A-Za-z. -]{2,30})?\s)?"
-        r"\((?!CNN|[A-Z]-)[A-Z][^()]{1,30}\)\s*--\s*"),
+    "outlet_dateline": re.compile(
+        r"^(?:[A-Z][A-Za-z'-]*(?: [A-Za-z'-]+){0,3}(?:,\s*[A-Za-z. -]{2,30})?\s)?"
+        r"\((?!CNN|[A-Z]-)[A-Z][^()]{1,30}\)\s*--\s*"
+    ),
     "email_to_friend": re.compile(r"E-mail to a friend\s*\.?\s*"),
 }
 _URL = re.compile(r"https?://\S+|www\.\S+")
@@ -122,9 +122,7 @@ def make_title(text: str, max_chars: int) -> str:
     return first[:max_chars].rsplit(" ", 1)[0] + "…"
 
 
-def chunk_document(
-    doc_id: str, title: str, text: str, size: int, overlap: int
-) -> list[Chunk]:
+def chunk_document(doc_id: str, title: str, text: str, size: int, overlap: int) -> list[Chunk]:
     """Split a document into sentence-aware chunks of about ``size`` words.
 
     Sentences are added until the chunk reaches ``size`` words; the next chunk re-starts from the

@@ -51,8 +51,10 @@ def evaluate_search(cfg: Config, engine: SearchEngine | None = None, write: bool
         ranks_by_method[method] = ranks
         log.info("%s done", method)
 
-    rows = [{"method": m, "queries": len(testset), **metrics_from_ranks(r, ks)}
-            for m, r in ranks_by_method.items()]
+    rows = [
+        {"method": m, "queries": len(testset), **metrics_from_ranks(r, ks)}
+        for m, r in ranks_by_method.items()
+    ]
     metrics = pd.DataFrame(rows)
     if not write:
         return metrics
@@ -75,8 +77,10 @@ def plot_search_metrics(metrics: pd.DataFrame, cfg: Config) -> None:
         xs = [j + (i - 1.5) * width for j in range(len(cols))]
         bars = ax.bar(xs, [row[c] for c in cols], width, label=row["method"], color=colors[row["method"]])
         ax.bar_label(bars, fmt="%.2f", fontsize=6, padding=1)
-    ax.set_xticks(range(len(cols)), [c.replace("recall", "Recall").replace("mrr", "MRR").replace("ndcg", "nDCG")
-                                      for c in cols])
+    ax.set_xticks(
+        range(len(cols)),
+        [c.replace("recall", "Recall").replace("mrr", "MRR").replace("ndcg", "nDCG") for c in cols],
+    )
     ax.set_ylim(0, 1.05)
     ax.set_ylabel("score (higher is better)")
     ax.set_title(f"Search accuracy on {int(metrics['queries'].iloc[0])} generated queries")

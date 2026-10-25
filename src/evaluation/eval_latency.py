@@ -17,8 +17,12 @@ log = get_logger(__name__)
 
 def _row(component: str, seconds: list[float]) -> dict[str, object]:
     ms = np.array(seconds) * 1000
-    return {"component": component, "n": len(ms), "mean_ms": round(float(ms.mean()), 1),
-            "p95_ms": round(float(np.percentile(ms, 95)), 1)}
+    return {
+        "component": component,
+        "n": len(ms),
+        "mean_ms": round(float(ms.mean()), 1),
+        "p95_ms": round(float(np.percentile(ms, 95)), 1),
+    }
 
 
 def measure_latency(cfg: Config) -> pd.DataFrame:
@@ -56,12 +60,21 @@ def measure_latency(cfg: Config) -> pd.DataFrame:
         for length in cfg.get("evaluation.summary_lengths"):
             sub = details[(details["mode"] == "single") & (details["length"] == length)]
             if len(sub):
-                rows.append(_row(f"summarize 1 doc: {length} (~{int(sub['words'].iloc[0])} words)",
-                                 sub["seconds"].tolist()))
+                rows.append(
+                    _row(
+                        f"summarize 1 doc: {length} (~{int(sub['words'].iloc[0])} words)",
+                        sub["seconds"].tolist(),
+                    )
+                )
         multi = details[details["mode"] == "multi"]
         if len(multi):
-            rows.append(_row(f"summarize top-{int(cfg.get('evaluation.human_eval_top_docs'))} docs: "
-                             f"{multi['length'].iloc[0]}", multi["seconds"].tolist()))
+            rows.append(
+                _row(
+                    f"summarize top-{int(cfg.get('evaluation.human_eval_top_docs'))} docs: "
+                    f"{multi['length'].iloc[0]}",
+                    multi["seconds"].tolist(),
+                )
+            )
     table = pd.DataFrame(rows)
     table.to_csv(cfg.path("paths.latency_file"), index=False)
     return table
