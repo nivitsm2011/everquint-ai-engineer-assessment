@@ -57,3 +57,32 @@ sentence (<= 150 characters). Chunks keep `doc_id`, `chunk_id`, `title`, `positi
 
 Largest chunk is 548 words: a few articles contain very long sentences that are never split.
 Processed files total about 150 MB (git-ignored).
+
+## 2. Indexing
+
+Three indexes are built over the 77,338 chunks and persisted in `indexes/` (git-ignored). Re-running
+`python scripts/build_index.py` loads existing files instead of rebuilding; `--rebuild` forces a fresh build.
+
+| Index | Method | Build time | Size on disk |
+|---|---|---|---|
+| BM25 | `rank_bm25` BM25Okapi (k1=1.5, b=0.75) on stopword-free tokens | 15 s | 76.5 MB |
+| TF-IDF | scikit-learn, unigrams, sublinear tf, min_df=2 (lexical baseline) | 12 s | 55.3 MB |
+| Embeddings | `all-MiniLM-L6-v2`, 384-dim, L2-normalised, max 256 tokens | 4,659 s (77.7 min, CPU) | 118.8 MB |
+| FAISS | `IndexFlatIP` (exact cosine) | 0.2 s | 118.8 MB |
+| **Total** | | | **369.4 MB** |
+
+Loading all indexes from disk takes 1.9 s. Embedding is the only expensive step and is a one-off; it is
+checkpointed every 5,000 chunks so an interrupted run resumes.
+
+### Scalability path
+
+`index.faiss.type` in `config/config.yaml` switches the dense index without code changes:
+
+- `flat` (default): exact search; fine at this size (77k vectors, a query scans them all in milliseconds).
+- `ivf` (`IndexIVFFlat`): clusters vectors into `nlist` cells and visits `nprobe` per query; trades a little
+  recall for speed once the corpus reaches millions of chunks (rule of thumb nlist ~ 4*sqrt(N)).
+- `hnsw` (`IndexHNSWFlat`): graph index with high recall and fast queries, at the cost of more memory and
+  slower builds.
+
+All three are covered by unit tests (each finds a vector's own nearest neighbour). Their recall and speed
+at this corpus size are not measured yet; that comparison belongs to the evaluation phase.
