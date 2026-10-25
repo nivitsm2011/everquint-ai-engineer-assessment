@@ -34,8 +34,11 @@ def metrics_from_ranks(ranks: list[int | None], ks: list[int]) -> dict[str, floa
     return out
 
 
-def evaluate_search(cfg: Config, engine: SearchEngine | None = None) -> pd.DataFrame:
-    """Run every test query through every method; write metrics CSV, per-query ranks and a chart."""
+def evaluate_search(cfg: Config, engine: SearchEngine | None = None, write: bool = True) -> pd.DataFrame:
+    """Run every test query through every method; write metrics CSV, per-query ranks and a chart.
+
+    With ``write=False`` only the metrics table is returned (used to compare embedding variants).
+    """
     testset = pd.read_csv(cfg.path("paths.testset_file"))
     engine = engine or SearchEngine(cfg)
     ks = [int(k) for k in cfg.get("evaluation.k_values")]
@@ -51,6 +54,8 @@ def evaluate_search(cfg: Config, engine: SearchEngine | None = None) -> pd.DataF
     rows = [{"method": m, "queries": len(testset), **metrics_from_ranks(r, ks)}
             for m, r in ranks_by_method.items()]
     metrics = pd.DataFrame(rows)
+    if not write:
+        return metrics
     metrics.round(4).to_csv(cfg.path("paths.search_metrics_file"), index=False)
     ranks_df = testset.copy()
     for m, r in ranks_by_method.items():

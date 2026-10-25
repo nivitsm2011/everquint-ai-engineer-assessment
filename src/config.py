@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import os
 from dataclasses import dataclass
 from functools import lru_cache
@@ -48,11 +49,35 @@ class Config:
         return (os.environ.get("LLM_PROVIDER") or self.get("llm.provider", "ollama")).lower()
 
 
+def with_variant(cfg: Config, variant: str) -> Config:
+    """Return a copy of ``cfg`` using the ``base`` or ``finetuned`` embedding model and dense index.
+
+    The BM25/TF-IDF indexes are shared; only the embedding model, embeddings file and FAISS index
+    change, so base and fine-tuned results can be compared side by side.
+    """
+    if variant == "base":
+        return cfg
+    if variant != "finetuned":
+        raise ValueError(f"Unknown embedding variant {variant!r} (base | finetuned)")
+    data = copy.deepcopy(cfg.data)
+    ft = data["finetune"]
+    data["embedding"]["model_name"] = str(PROJECT_ROOT / ft["model_dir"])
+    data["paths"]["embeddings_file"] = ft["embeddings_file"]
+    data["paths"]["faiss_index"] = ft["faiss_index"]
+    return Config(data=data)
+
+
 @lru_cache(maxsize=1)
 def load_config(path: str | None = None) -> Config:
-    """Load YAML config (cached) after loading ``.env`` into the environment."""
+    """Load YAML config (cached) after loading ``.env`` into the environment.
+
+    ``finetune.enabled: true`` (or ``EMBEDDING_VARIANT=finetuned`` in the environment) switches the
+    whole system to the fine-tuned embedding model.
+    """
     load_dotenv(PROJECT_ROOT / ".env")
     cfg_path = Path(path) if path else DEFAULT_CONFIG_PATH
     with cfg_path.open("r", encoding="utf-8") as fh:
         data = yaml.safe_load(fh)
-    return Config(data=data)
+    cfg = Config(data=data)
+    variant = os.environ.get("EMBEDDING_VARIANT") or ("finetuned" if data["finetune"]["enabled"] else "base")
+    return with_variant(cfg, variant)

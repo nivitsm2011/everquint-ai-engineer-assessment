@@ -52,13 +52,14 @@ def _prompt(article: str, note: str = "") -> str:
     )
 
 
-def generate_query(doc_id: str, text: str, cfg: Config, llm: LLMClient, cache: DiskCache) -> str:
+def generate_query(doc_id: str, text: str, cfg: Config, llm: LLMClient, cache: DiskCache,
+                   doc_words: int | None = None) -> str:
     """Generate (and cache) one query for a document; retry once if it copies the article."""
     key = f"{doc_id}|{llm.provider}|{llm.model}|q1"
     hit = cache.get(key)
     if hit:
         return str(hit["query"])
-    article = " ".join(text.split()[: int(cfg.get("evaluation.query_doc_words"))])
+    article = " ".join(text.split()[: doc_words or int(cfg.get("evaluation.query_doc_words"))])
     max_words, max_run = int(cfg.get("evaluation.query_max_words")), int(cfg.get("evaluation.max_copied_run"))
     query = clean_query(llm.generate(_prompt(article), QUERY_SYSTEM, max_tokens=40), max_words)
     if not query or longest_copied_run(query, text) >= max_run:

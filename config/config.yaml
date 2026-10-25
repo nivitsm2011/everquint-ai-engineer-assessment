@@ -60,6 +60,21 @@ embedding:
 app:
   max_summary_docs: 5        # the app summarises at most this many top results (CPU LLM is slow)
 
+finetune:                    # Phase 7: domain adaptation of the embedding model
+  enabled: false             # true -> the app/search use the fine-tuned model and its own dense index
+  num_pairs: 300             # (LLM query, passage) training pairs from TRAIN docs, never test docs
+  query_doc_words: 150       # words of the article shown to the LLM (shorter = faster on CPU)
+  batch_size: 32             # MultipleNegativesRankingLoss: other pairs in the batch are negatives
+  epochs: 1
+  learning_rate: 2.0e-5
+  warmup_ratio: 0.1
+  seed: 7
+  model_dir: models/embedder_ft
+  pairs_file: data/processed/finetune_pairs.csv
+  embeddings_file: indexes/ft/embeddings.npy
+  faiss_index: indexes/ft/dense.faiss
+  comparison_file: reports/embedding_comparison.csv
+
 suggest:
   min_count_unigram: 60      # an n-gram must occur this often in the corpus to be suggested
   min_count_bigram: 25

@@ -273,3 +273,43 @@ disabled on the last page), `app_4_custom_length_summary.jpg` (custom 60-word ta
 in 87 s). The Short/Medium/Long radio buttons use the same code path as the custom slider and were exercised in
 Phase 4's CLI runs, but were not clicked through in the browser. Known cosmetic issue: after choosing a
 suggestion, the box keeps the partially typed text while the results heading shows the chosen phrase.
+
+## 7. Domain adaptation of the embedding model (optional improvement)
+
+`python scripts/finetune_embeddings.py` (stages `pairs`, `train`, `index`, `compare`; resumable).
+
+- **Training data:** 300 (query, passage) pairs from indexed articles that are **not** in the 200-document test
+  set (the script asserts this and a unit test checks it). For each, `llama3.2:3b` writes a short search query from
+  the first 150 words; the passage is the article's first chunk. Pairs are in `data/processed/finetune_pairs.csv`.
+- **Training:** `all-MiniLM-L6-v2` + `MultipleNegativesRankingLoss` (the other passages in a batch of 32 act as
+  negatives), 1 epoch = 9 steps, learning rate 2e-5, 10% warm-up. It took 41 s on CPU.
+- **Re-indexing:** all 77,338 chunks were re-embedded with the new model into a separate FAISS index
+  (`indexes/ft/`); this was the expensive step (about 36 min with the laptop otherwise idle). BM25 and TF-IDF are
+  unchanged and shared. Setting `finetune.enabled: true` (or `EMBEDDING_VARIANT=finetuned`) makes search, the
+  evaluation and the app use the fine-tuned model; the base index is untouched.
+
+Search accuracy on the same 200 test queries (`reports/embedding_comparison.csv`):
+
+| Method | Metric | Base | Fine-tuned | Change |
+|---|---|---|---|---|
+| Dense | Recall@1 | 0.540 | 0.575 | +0.035 |
+| Dense | Recall@5 | 0.855 | 0.875 | +0.020 |
+| Dense | Recall@10 | 0.905 | 0.920 | +0.015 |
+| Dense | MRR@10 | 0.676 | 0.705 | +0.028 |
+| Dense | nDCG@10 | 0.733 | 0.758 | +0.025 |
+| Hybrid | Recall@1 | 0.595 | 0.645 | +0.050 |
+| Hybrid | Recall@5 | 0.875 | 0.890 | +0.015 |
+| Hybrid | Recall@10 | 0.965 | 0.970 | +0.005 |
+| Hybrid | MRR@10 | 0.725 | 0.755 | +0.030 |
+| Hybrid | nDCG@10 | 0.784 | 0.807 | +0.024 |
+| BM25 (control) | all metrics | unchanged | unchanged | 0.000 |
+
+- Every dense and hybrid metric moved up, and the BM25 control is identical, so the change comes from the
+  embedding model alone. The largest gains are at rank 1 (hybrid Recall@1 0.595 -> 0.645) and in MRR (+0.03).
+- **Caution:** with 200 queries each point of Recall@k is 0.5 percentage points and the standard error of a
+  difference is a few points, so individual changes (especially Recall@10, +0.5 to +1.5 points) are within noise.
+  The consistent direction across all metrics is the more convincing evidence, but a significance test or a larger
+  test set would be needed to claim a firm improvement. The training queries come from the same LLM and prompt
+  style as the test queries, which probably helps; real user queries may benefit less.
+- Cost and benefit: 300 LLM-written queries took about 55 min and the re-embedding about 36 min, for roughly
+  +3 points of MRR. The fine-tuned model is not enabled by default (`finetune.enabled: false`).
