@@ -1,0 +1,49 @@
+{
+  "id": 13,
+  "category": "tricky",
+  "question": "Alice has 5 apples and gives away 8. How many apples does she have left?",
+  "expected_canonical": "UNSOLVABLE",
+  "expected_status": "failed",
+  "model": "gemini (gemini-3.5-flash-lite)",
+  "canonical_answer": "-3",
+  "verifier_passed": false,
+  "retries": 2,
+  "evaluated": true,
+  "test_passed": false,
+  "result": {
+    "answer": "Unverified: -3 apples",
+    "status": "failed",
+    "reasoning_visible_to_user": "The answer could not be verified. Failed checks: constraints.",
+    "metadata": {
+      "plan": "1. Identify the initial number of apples (5) and the number of apples given away (8) 2. Compute the remaining apples by subtracting the given away amount from the initial amount: 5 - 8 3. Account for the negative result if applicable in this context 4. Format the answer as a plain number",
+      "checks": [
+        {
+          "check_name": "output_format",
+          "passed": true,
+          "details": "All required keys present"
+        },
+        {
+          "check_name": "tool_consistency",
+          "passed": true,
+          "details": "1 tool call(s) succeeded; ok"
+        },
+        {
+          "check_name": "constraints",
+          "passed": false,
+          "details": "step 1: negative result -3.0"
+        },
+        {
+          "check_name": "independent_resolve",
+          "passed": true,
+          "details": "Independent answer '-3' vs executor answer '-3'"
+        },
+        {
+          "check_name": "llm_verdict",
+          "passed": true,
+          "details": "Verdict: approve"
+        }
+      ],
+      "retries": 2
+    }
+  }
+}
