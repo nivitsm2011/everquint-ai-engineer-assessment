@@ -118,3 +118,42 @@ Sample runs (3 queries x 4 methods, `top_n=3`) are saved in `reports/sample_quer
   model ranks lower; hybrid mixes both.
 - Known weakness: a few CNN Student News items have a date line as their "title" (e.g. "October 29, 2009 .")
   because the title is the first sentence. This is a data-quality issue to revisit, not a search bug.
+
+## 4. Summarization
+
+`src/llm.py` hides the provider behind one interface (`LLMClient.generate`). `llm.provider` in
+`config/config.yaml` (or `LLM_PROVIDER` in `.env`) picks `ollama` (default, `llama3.2:3b`, local, free) or
+`openai` (`gpt-4o-mini`, key from `OPENAI_API_KEY`). Transient failures (timeouts, rate limits, 5xx) are
+retried 3 times with exponential backoff (2 s, 4 s); a missing API key, an unreachable Ollama server or a
+missing model fail immediately with a message that says how to fix it. Temperature is 0.2.
+
+`src/summarize.py` exposes `summarize(docs: list[Result], length) -> Summary`, where `length` is `short`
+(~50 words), `medium` (~120), `long` (~250) or an exact word count (20-500). It also provides
+`Summarizer.summarize_document` / `summarize_text` for single-document summaries (used for ROUGE).
+
+- **Prompting:** the system prompt tells the model to use only the supplied text, add no outside facts,
+  and answer in one plain paragraph; the user prompt states the word target and an allowed range (+/-25%).
+- **Length control:** small models miss word targets, so if the output is outside the range the request is
+  repeated once with a note about the miss; the closest attempt is kept and, if still too long, trimmed at
+  a sentence boundary. Too-short outputs cannot be fixed this way, so the achieved word count is always
+  returned in `Summary.word_count`.
+- **Map-reduce:** several documents are summarized one by one (~100 words each, "map"), then combined into
+  one summary at the requested length ("reduce"). An article too long for the context window is split into
+  sentence-aligned segments that are mapped and reduced the same way. Token use is estimated as
+  1.4 tokens per word (conservative), keeping each call under 2,800 input tokens inside Ollama's 4,096
+  context; as a last resort partial summaries are truncated at sentence boundaries.
+- **Cache:** results are cached on disk (`data/cache/summaries`) keyed by document ids, word target,
+  provider, model, temperature and prompt version, so repeating a query makes no LLM calls. Per-document
+  map summaries are cached separately and reused across lengths.
+
+Example (`reports/sample_summaries.txt`: top 3 hybrid results for "tropical storm causes flooding and
+evacuations", llama3.2:3b on CPU):
+
+| Length | Target | Actual words | LLM calls | Time |
+|---|---|---|---|---|
+| short | 50 | 48 | 4 (3 map + 1 reduce) | 108 s |
+| medium | 120 | 117 | 1 (map summaries reused from cache) | 25 s |
+| long | 250 | 232 | 2 (one length retry) | 53 s |
+
+Quality is only eyeballed so far (the summaries read coherently and cover all three storms); faithfulness
+and ROUGE are measured in the evaluation phase.

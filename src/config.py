@@ -45,7 +45,7 @@ class Config:
     @property
     def llm_provider(self) -> str:
         """Active LLM provider; the ``LLM_PROVIDER`` env var overrides YAML."""
-        return os.environ.get("LLM_PROVIDER", self.get("llm.provider", "ollama")).lower()
+        return (os.environ.get("LLM_PROVIDER") or self.get("llm.provider", "ollama")).lower()
 
 
 @lru_cache(maxsize=1)

@@ -21,6 +21,7 @@ def test_paths_resolve_under_project_root() -> None:
 
 def test_provider_switch(monkeypatch: pytest.MonkeyPatch) -> None:
     cfg = load_config()
+    monkeypatch.setenv("OPENAI_API_KEY", "sk-test-not-real")
     monkeypatch.setenv("LLM_PROVIDER", "openai")
     assert isinstance(get_llm(cfg), OpenAIClient)
     monkeypatch.setenv("LLM_PROVIDER", "ollama")

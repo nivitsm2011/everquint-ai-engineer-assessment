@@ -14,6 +14,7 @@ paths:
   faiss_index: indexes/dense.faiss
   embeddings_file: indexes/embeddings.npy
   index_stats_file: reports/index_stats.json
+  cache_dir: data/cache
 
 corpus:
   dataset_name: abisee/cnn_dailymail
@@ -61,9 +62,10 @@ index:
     ef_search: 64            # hnsw: query-time effort
 
 llm:
-  provider: ollama           # openai | ollama
-  timeout_seconds: 120
+  provider: ollama           # openai | ollama   (LLM_PROVIDER in .env overrides)
+  timeout_seconds: 300       # CPU generation can be slow
   max_retries: 3
+  backoff_seconds: 2         # doubles after each failed attempt
   temperature: 0.2
   openai:
     model: gpt-4o-mini
@@ -71,6 +73,7 @@ llm:
   ollama:
     model: llama3.2:3b
     host: http://localhost:11434
+    num_ctx: 4096            # context window requested from Ollama
 
 summary:
   lengths:                   # target words per length choice
@@ -78,7 +81,15 @@ summary:
     medium: 120
     long: 250
   default_length: medium
-  max_context_chars: 12000
+  min_words: 20              # bounds for an exact word target
+  max_words: 500
+  map_words: 100             # size of each per-document summary in map-reduce
+  max_input_tokens: 2800     # text budget per LLM call (prompt + output must fit num_ctx)
+  tokens_per_word: 1.4       # conservative words->tokens estimate used for budgeting
+  length_tolerance: 0.25     # accept summaries within +/-25% of the target
+  length_retries: 1          # re-prompts when the length is off
+  use_cache: true
+  prompt_version: 1          # bump to invalidate cached summaries after changing prompts
 
 evaluation:
   seed: 42

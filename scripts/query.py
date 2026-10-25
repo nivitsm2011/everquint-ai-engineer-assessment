@@ -32,11 +32,26 @@ def main() -> None:
     parser.add_argument("--page", type=int, default=1)
     parser.add_argument("--page_size", type=int, default=None)
     parser.add_argument("--excerpts", type=int, default=1, help="excerpts to print per document")
+    parser.add_argument("--summarize", action="store_true", help="summarize the returned documents with the LLM")
+    parser.add_argument("--length", default="medium", help="short | medium | long | exact word count")
     args = parser.parse_args()
     results = SearchEngine().search(
         args.query, args.top_n, args.method, args.page, args.page_size
     )
     sys.stdout.write(format_results(results, args.excerpts) or "No results.\n")
+    if args.summarize and results:
+        from src.llm import LLMError
+        from src.summarize import summarize
+
+        try:
+            s = summarize(results, args.length)
+        except LLMError as exc:
+            sys.exit(f"Summarization failed: {exc}")
+        sys.stdout.write(
+            f"--- Summary ({args.length}: target {s.target_words}, actual {s.word_count} words; "
+            f"{s.provider}/{s.model}; {s.llm_calls} LLM calls{', cached' if s.cached else ''}; "
+            f"{s.seconds}s) ---\n{s.text}\n"
+        )
 
 
 if __name__ == "__main__":
