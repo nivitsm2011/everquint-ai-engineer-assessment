@@ -1,0 +1,162 @@
+{
+  "testset": {
+    "queries": 200,
+    "seed": 42
+  },
+  "run": {
+    "finished_utc": "2026-10-25T11:12:45+00:00",
+    "llm": "ollama/llama3.2:3b",
+    "embedding": "sentence-transformers/all-MiniLM-L6-v2",
+    "test_docs": 200,
+    "summary_eval_docs": 40
+  },
+  "search": [
+    {
+      "method": "bm25",
+      "queries": 200,
+      "recall@1": 0.58,
+      "recall@5": 0.87,
+      "recall@10": 0.925,
+      "mrr@10": 0.7042,
+      "ndcg@10": 0.7582,
+      "precision@5": 0.174
+    },
+    {
+      "method": "tfidf",
+      "queries": 200,
+      "recall@1": 0.495,
+      "recall@5": 0.825,
+      "recall@10": 0.875,
+      "mrr@10": 0.6353,
+      "ndcg@10": 0.6945,
+      "precision@5": 0.165
+    },
+    {
+      "method": "dense",
+      "queries": 200,
+      "recall@1": 0.54,
+      "recall@5": 0.855,
+      "recall@10": 0.905,
+      "mrr@10": 0.6762,
+      "ndcg@10": 0.7326,
+      "precision@5": 0.171
+    },
+    {
+      "method": "hybrid",
+      "queries": 200,
+      "recall@1": 0.595,
+      "recall@5": 0.875,
+      "recall@10": 0.965,
+      "mrr@10": 0.7254,
+      "ndcg@10": 0.7836,
+      "precision@5": 0.175
+    }
+  ],
+  "summary": {
+    "rouge": [
+      {
+        "system": "lead-3 (same docs)",
+        "docs": 40,
+        "rouge1_f": 0.3059,
+        "rouge2_f": 0.101,
+        "rougeL_f": 0.2017,
+        "mean_words": 56.5
+      },
+      {
+        "system": "lead-3 (all test docs)",
+        "docs": 200,
+        "rouge1_f": 0.346,
+        "rouge2_f": 0.14,
+        "rougeL_f": 0.224,
+        "mean_words": 66.8
+      },
+      {
+        "system": "LLM short (~50 words)",
+        "docs": 40,
+        "rouge1_f": 0.371,
+        "rouge2_f": 0.1324,
+        "rougeL_f": 0.2521,
+        "mean_words": 49.3
+      },
+      {
+        "system": "LLM medium (~120 words)",
+        "docs": 40,
+        "rouge1_f": 0.2965,
+        "rouge2_f": 0.1065,
+        "rougeL_f": 0.1904,
+        "mean_words": 123.5
+      },
+      {
+        "system": "LLM long (~250 words)",
+        "docs": 40,
+        "rouge1_f": 0.2205,
+        "rouge2_f": 0.0865,
+        "rougeL_f": 0.1483,
+        "mean_words": 225.9
+      }
+    ],
+    "human_eval_rows": 15
+  },
+  "latency": [
+    {
+      "component": "load indexes (BM25+TF-IDF+FAISS)",
+      "n": 5,
+      "mean_ms": 1505.6,
+      "p95_ms": 1539.8
+    },
+    {
+      "component": "load embedding model",
+      "n": 1,
+      "mean_ms": 386.2,
+      "p95_ms": 386.2
+    },
+    {
+      "component": "search: bm25 (top 10)",
+      "n": 200,
+      "mean_ms": 171.3,
+      "p95_ms": 237.2
+    },
+    {
+      "component": "search: tfidf (top 10)",
+      "n": 200,
+      "mean_ms": 17.7,
+      "p95_ms": 19.0
+    },
+    {
+      "component": "search: dense (top 10)",
+      "n": 200,
+      "mean_ms": 19.8,
+      "p95_ms": 22.4
+    },
+    {
+      "component": "search: hybrid (top 10)",
+      "n": 200,
+      "mean_ms": 190.5,
+      "p95_ms": 260.7
+    },
+    {
+      "component": "summarize 1 doc: short (~50 words)",
+      "n": 40,
+      "mean_ms": 36298.8,
+      "p95_ms": 57689.5
+    },
+    {
+      "component": "summarize 1 doc: medium (~120 words)",
+      "n": 40,
+      "mean_ms": 41342.2,
+      "p95_ms": 64338.5
+    },
+    {
+      "component": "summarize 1 doc: long (~250 words)",
+      "n": 40,
+      "mean_ms": 52215.0,
+      "p95_ms": 75587.5
+    },
+    {
+      "component": "summarize top-3 docs: medium",
+      "n": 15,
+      "mean_ms": 151859.3,
+      "p95_ms": 213319.0
+    }
+  ]
+}

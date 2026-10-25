@@ -1,0 +1,15 @@
+.env
+data/
+indexes/
+__pycache__/
+.venv/
+*.pkl
+*.faiss
+*.npy
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+.DS_Store
+models/

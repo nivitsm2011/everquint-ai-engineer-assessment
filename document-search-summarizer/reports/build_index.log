@@ -1,0 +1,38 @@
+2026-10-25 10:25:19,905 INFO src.indexing: build_bm25 took 15145.5 ms
+2026-10-25 10:25:32,481 INFO src.indexing: build_tfidf took 12314.5 ms
+The cache for model files in Transformers v4.22.0 has been updated. Migrating your old cache. This is a one-time only operation. You can interrupt this and resume the migration later on by calling `transformers.utils.move_cache()`.
+0it [00:00, ?it/s]0it [00:00, ?it/s]
+2026-10-25 10:25:51,849 INFO src.indexing: Embedding 77338 chunks on cpu
+2026-10-25 10:33:59,628 INFO src.indexing: embedded 5000 / 77338
+2026-10-25 10:48:06,442 INFO src.indexing: embedded 10000 / 77338
+2026-10-25 10:53:57,129 INFO src.indexing: embedded 15000 / 77338
+2026-10-25 10:59:07,913 INFO src.indexing: embedded 20000 / 77338
+2026-10-25 11:04:22,560 INFO src.indexing: embedded 25000 / 77338
+2026-10-25 11:15:16,013 INFO src.indexing: embedded 30000 / 77338
+2026-10-25 11:21:23,091 INFO src.indexing: embedded 35000 / 77338
+2026-10-25 11:23:36,218 INFO src.indexing: embedded 40000 / 77338
+2026-10-25 11:26:04,495 INFO src.indexing: embedded 45000 / 77338
+2026-10-25 11:28:39,272 INFO src.indexing: embedded 50000 / 77338
+2026-10-25 11:31:19,686 INFO src.indexing: embedded 55000 / 77338
+2026-10-25 11:34:01,483 INFO src.indexing: embedded 60000 / 77338
+2026-10-25 11:36:38,215 INFO src.indexing: embedded 65000 / 77338
+2026-10-25 11:39:15,726 INFO src.indexing: embedded 70000 / 77338
+2026-10-25 11:41:55,014 INFO src.indexing: embedded 75000 / 77338
+2026-10-25 11:43:11,111 INFO src.indexing: embedded 77338 / 77338
+2026-10-25 11:43:11,485 INFO src.indexing: embed_chunks took 4658992.4 ms
+2026-10-25 11:43:11,641 INFO src.indexing: build_faiss took 153.7 ms
+'(ReadTimeoutError("HTTPSConnectionPool(host='huggingface.co', port=443): Read timed out. (read timeout=10)"), '(Request ID: cd2cb853-fcd4-43d5-9a3e-32b80dc79451)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json
+Retrying in 1s [Retry 1/5].
+
+Sanity query: 'prime minister announces new economic plan'
+  BM25 top1 : Iraq's main Shiite parties Monday announced the formation of a new alliance that excludes 
+  Dense top : President Barack Obama painted a bleak economic picture of the country Saturday, hours bef
+  Dense top : Leaders of the world's largest economies agreed on Thursday to a package worth more than $
+
+artifact    status    build s   size MB
+bm25        built        15.4      76.5
+tfidf       built        12.3      55.3
+embeddings  built      4659.0     118.8
+faiss       built         0.2     118.8
+TOTAL                             369.4
+Load all indexes: 1.87s

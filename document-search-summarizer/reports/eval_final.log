@@ -1,0 +1,135 @@
+2026-10-25 16:41:03,778 INFO src.evaluation.eval_summary: summarised 1 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 1 / 40 test documents
+2026-10-25 16:41:03,778 INFO src.evaluation.eval_summary: summarised 2 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 2 / 40 test documents
+2026-10-25 16:41:03,778 INFO src.evaluation.eval_summary: summarised 3 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 3 / 40 test documents
+2026-10-25 16:41:03,778 INFO src.evaluation.eval_summary: summarised 4 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 4 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 5 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 5 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 6 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 6 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 7 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 7 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 8 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 8 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 9 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 9 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 10 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 10 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 11 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 11 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 12 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 12 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 13 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 13 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 14 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 14 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 15 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 15 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 16 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 16 / 40 test documents
+2026-10-25 16:41:03,779 INFO src.evaluation.eval_summary: summarised 17 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 17 / 40 test documents
+2026-10-25 16:41:03,780 INFO src.evaluation.eval_summary: summarised 18 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 18 / 40 test documents
+2026-10-25 16:41:03,780 INFO src.evaluation.eval_summary: summarised 19 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 19 / 40 test documents
+2026-10-25 16:41:03,780 INFO src.evaluation.eval_summary: summarised 20 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 20 / 40 test documents
+2026-10-25 16:41:03,780 INFO src.evaluation.eval_summary: summarised 21 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 21 / 40 test documents
+2026-10-25 16:41:03,780 INFO src.evaluation.eval_summary: summarised 22 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 22 / 40 test documents
+2026-10-25 16:41:03,780 INFO src.evaluation.eval_summary: summarised 23 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 23 / 40 test documents
+2026-10-25 16:41:03,780 INFO src.evaluation.eval_summary: summarised 24 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 24 / 40 test documents
+2026-10-25 16:41:03,780 INFO src.evaluation.eval_summary: summarised 25 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 25 / 40 test documents
+2026-10-25 16:41:03,780 INFO src.evaluation.eval_summary: summarised 26 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 26 / 40 test documents
+2026-10-25 16:41:03,780 INFO src.evaluation.eval_summary: summarised 27 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 27 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 28 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 28 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 29 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 29 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 30 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 30 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 31 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 31 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 32 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 32 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 33 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 33 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 34 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 34 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 35 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 35 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 36 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 36 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 37 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 37 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 38 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 38 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 39 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 39 / 40 test documents
+2026-10-25 16:41:03,781 INFO src.evaluation.eval_summary: summarised 40 / 40 test documents
+INFO:src.evaluation.eval_summary:summarised 40 / 40 test documents
+2026-10-25 16:41:12,517 INFO src.evaluation.eval_summary: human-eval sample 1 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 1 / 15
+2026-10-25 16:41:12,706 INFO src.evaluation.eval_summary: human-eval sample 2 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 2 / 15
+2026-10-25 16:41:12,948 INFO src.evaluation.eval_summary: human-eval sample 3 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 3 / 15
+2026-10-25 16:41:13,116 INFO src.evaluation.eval_summary: human-eval sample 4 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 4 / 15
+2026-10-25 16:41:13,308 INFO src.evaluation.eval_summary: human-eval sample 5 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 5 / 15
+2026-10-25 16:41:13,534 INFO src.evaluation.eval_summary: human-eval sample 6 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 6 / 15
+2026-10-25 16:41:13,721 INFO src.evaluation.eval_summary: human-eval sample 7 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 7 / 15
+2026-10-25 16:41:13,953 INFO src.evaluation.eval_summary: human-eval sample 8 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 8 / 15
+2026-10-25 16:41:14,207 INFO src.evaluation.eval_summary: human-eval sample 9 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 9 / 15
+2026-10-25 16:41:14,445 INFO src.evaluation.eval_summary: human-eval sample 10 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 10 / 15
+2026-10-25 16:41:14,642 INFO src.evaluation.eval_summary: human-eval sample 11 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 11 / 15
+2026-10-25 16:41:14,867 INFO src.evaluation.eval_summary: human-eval sample 12 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 12 / 15
+2026-10-25 16:41:15,065 INFO src.evaluation.eval_summary: human-eval sample 13 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 13 / 15
+2026-10-25 16:41:15,296 INFO src.evaluation.eval_summary: human-eval sample 14 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 14 / 15
+2026-10-25 16:41:15,484 INFO src.evaluation.eval_summary: human-eval sample 15 / 15
+INFO:src.evaluation.eval_summary:human-eval sample 15 / 15
+
+== ROUGE F1 ==
+                 system  docs  rouge1_f  rouge2_f  rougeL_f  mean_words
+     lead-3 (same docs)    40    0.3059    0.1010    0.2017        56.5
+ lead-3 (all test docs)   200    0.3460    0.1400    0.2240        66.8
+  LLM short (~50 words)    40    0.3710    0.1324    0.2521        49.3
+LLM medium (~120 words)    40    0.2965    0.1065    0.1904       123.5
+  LLM long (~250 words)    40    0.2205    0.0865    0.1483       225.9
+
+Human-evaluation sheet: C:\DocSearchLLM\doc-search-summarizer\reports\human_eval_sheet.csv (15 rows)
+
+== Latency ==
+                           component   n  mean_ms   p95_ms
+    load indexes (BM25+TF-IDF+FAISS)   5   1505.6   1539.8
+                load embedding model   1    386.2    386.2
+               search: bm25 (top 10) 200    171.3    237.2
+              search: tfidf (top 10) 200     17.7     19.0
+              search: dense (top 10) 200     19.8     22.4
+             search: hybrid (top 10) 200    190.5    260.7
+  summarize 1 doc: short (~50 words)  40  36298.8  57689.5
+summarize 1 doc: medium (~120 words)  40  41342.2  64338.5
+  summarize 1 doc: long (~250 words)  40  52215.0  75587.5
+        summarize top-3 docs: medium  15 151859.3 213319.0
+
+Wrote C:\DocSearchLLM\doc-search-summarizer\reports\metrics_summary.json

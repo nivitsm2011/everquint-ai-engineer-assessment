@@ -1,0 +1,41 @@
+2026-10-25 12:31:11,617 INFO src.evaluation.make_testset: queries generated: 10 / 200
+2026-10-25 12:32:59,960 INFO src.evaluation.make_testset: query for d01827 copied the article or was empty; retrying
+2026-10-25 12:34:17,141 INFO src.evaluation.make_testset: queries generated: 20 / 200
+2026-10-25 12:36:40,956 INFO src.evaluation.make_testset: query for d03043 copied the article or was empty; retrying
+2026-10-25 12:37:41,341 INFO src.evaluation.make_testset: queries generated: 30 / 200
+2026-10-25 12:40:53,109 INFO src.evaluation.make_testset: queries generated: 40 / 200
+2026-10-25 12:43:58,787 INFO src.evaluation.make_testset: queries generated: 50 / 200
+2026-10-25 12:47:03,890 INFO src.evaluation.make_testset: queries generated: 60 / 200
+2026-10-25 12:48:22,548 INFO src.evaluation.make_testset: query for d07224 copied the article or was empty; retrying
+2026-10-25 12:50:43,524 INFO src.evaluation.make_testset: queries generated: 70 / 200
+2026-10-25 12:53:55,976 INFO src.evaluation.make_testset: queries generated: 80 / 200
+2026-10-25 12:56:59,063 INFO src.evaluation.make_testset: queries generated: 90 / 200
+2026-10-25 13:00:10,839 INFO src.evaluation.make_testset: queries generated: 100 / 200
+2026-10-25 13:03:24,253 INFO src.evaluation.make_testset: query for d11033 copied the article or was empty; retrying
+2026-10-25 13:04:38,500 INFO src.evaluation.make_testset: queries generated: 110 / 200
+2026-10-25 13:08:43,001 INFO src.evaluation.make_testset: queries generated: 120 / 200
+2026-10-25 13:12:25,262 INFO src.evaluation.make_testset: queries generated: 130 / 200
+2026-10-25 13:16:04,179 INFO src.evaluation.make_testset: query for d13917 copied the article or was empty; retrying
+2026-10-25 13:16:57,609 INFO src.evaluation.make_testset: queries generated: 140 / 200
+2026-10-25 13:21:14,189 INFO src.evaluation.make_testset: queries generated: 150 / 200
+2026-10-25 13:25:11,154 INFO src.evaluation.make_testset: queries generated: 160 / 200
+2026-10-25 13:28:41,215 INFO src.evaluation.make_testset: queries generated: 170 / 200
+2026-10-25 13:32:27,144 INFO src.evaluation.make_testset: queries generated: 180 / 200
+2026-10-25 13:36:09,480 INFO src.evaluation.make_testset: queries generated: 190 / 200
+2026-10-25 13:39:45,906 INFO src.evaluation.make_testset: queries generated: 200 / 200
+2026-10-25 13:39:46,176 INFO src.evaluation.make_testset: wrote C:\DocSearchLLM\doc-search-summarizer\reports\testset.csv (200 queries)
+
+== Test set (sample) ==
+doc_id                                             query
+d00146                A380 maiden flight luxury features
+d00453       Lufthansa plane scrapes wing during landing
+d00614              Mexican troops deployed to US border
+d00692                          first ladies in politics
+d00742 Argentine president defends grain export tax hike
+d00869             Hurricane Hanna southeastern US coast
+d01163      India's rural poverty and development issues
+d01265         formula one last race world championships
+d01347                mortgage crisis explained for kids
+d01516           AC Milan vs Fiorentina result yesterday
+
+Wrote C:\DocSearchLLM\doc-search-summarizer\reports\metrics_summary.json

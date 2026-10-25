@@ -1,0 +1,29 @@
+{
+  "chunks": 77338,
+  "faiss_type": "flat",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "load_all_indexes_seconds": 1.87,
+  "artifacts": {
+    "bm25": {
+      "build_seconds": 15.4,
+      "status": "built",
+      "size_mb": 76.5
+    },
+    "tfidf": {
+      "build_seconds": 12.3,
+      "status": "built",
+      "size_mb": 55.3
+    },
+    "embeddings": {
+      "build_seconds": 4659.0,
+      "status": "built",
+      "size_mb": 118.8
+    },
+    "faiss": {
+      "build_seconds": 0.2,
+      "status": "built",
+      "size_mb": 118.8
+    }
+  },
+  "total_size_mb": 369.4
+}

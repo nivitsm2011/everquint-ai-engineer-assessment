@@ -1,0 +1,21 @@
+[tool.black]
+line-length = 110
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+extend-exclude = [".venv", "data", "indexes", "models"]
+
+[tool.ruff.lint]
+# E/F/W pycodestyle+pyflakes, I imports, B bugbear, UP pyupgrade, T20 forbids print() in code
+select = ["E", "F", "W", "I", "B", "UP", "T20"]
+ignore = ["B905"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["E402"]   # scripts add the project root to sys.path before importing
+"app/*" = ["E402"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning"]

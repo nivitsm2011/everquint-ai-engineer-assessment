@@ -1,0 +1,41 @@
+2026-10-25 17:04:36,125 INFO src.finetune: training queries: 10 / 300
+2026-10-25 17:05:02,406 INFO src.evaluation.make_testset: query for d00972 copied the article or was empty; retrying
+2026-10-25 17:06:15,639 INFO src.finetune: training queries: 20 / 300
+2026-10-25 17:07:20,714 INFO src.evaluation.make_testset: query for d01919 copied the article or was empty; retrying
+2026-10-25 17:07:59,596 INFO src.finetune: training queries: 30 / 300
+2026-10-25 17:08:18,069 INFO src.evaluation.make_testset: query for d02262 copied the article or was empty; retrying
+2026-10-25 17:09:42,565 INFO src.finetune: training queries: 40 / 300
+2026-10-25 17:11:17,297 INFO src.finetune: training queries: 50 / 300
+2026-10-25 17:12:45,155 INFO src.evaluation.make_testset: query for d04261 copied the article or was empty; retrying
+2026-10-25 17:13:05,043 INFO src.finetune: training queries: 60 / 300
+2026-10-25 17:14:41,179 INFO src.finetune: training queries: 70 / 300
+2026-10-25 17:16:02,361 INFO src.evaluation.make_testset: query for d05610 copied the article or was empty; retrying
+2026-10-25 17:16:31,653 INFO src.finetune: training queries: 80 / 300
+2026-10-25 17:18:08,861 INFO src.finetune: training queries: 90 / 300
+2026-10-25 17:19:47,994 INFO src.finetune: training queries: 100 / 300
+2026-10-25 17:20:48,013 INFO src.evaluation.make_testset: query for d07935 copied the article or was empty; retrying
+2026-10-25 17:21:37,007 INFO src.finetune: training queries: 110 / 300
+2026-10-25 17:23:14,434 INFO src.finetune: training queries: 120 / 300
+2026-10-25 17:23:53,174 INFO src.evaluation.make_testset: query for d08872 copied the article or was empty; retrying
+2026-10-25 17:25:01,474 INFO src.finetune: training queries: 130 / 300
+2026-10-25 17:26:41,656 INFO src.finetune: training queries: 140 / 300
+2026-10-25 17:28:18,541 INFO src.finetune: training queries: 150 / 300
+2026-10-25 17:29:09,078 INFO src.evaluation.make_testset: query for d10842 copied the article or was empty; retrying
+2026-10-25 17:30:09,657 INFO src.finetune: training queries: 160 / 300
+2026-10-25 17:31:47,960 INFO src.finetune: training queries: 170 / 300
+2026-10-25 17:33:25,879 INFO src.finetune: training queries: 180 / 300
+2026-10-25 17:35:08,215 INFO src.finetune: training queries: 190 / 300
+2026-10-25 17:36:52,519 INFO src.finetune: training queries: 200 / 300
+2026-10-25 17:38:41,295 INFO src.finetune: training queries: 210 / 300
+2026-10-25 17:40:25,584 INFO src.finetune: training queries: 220 / 300
+2026-10-25 17:42:00,919 INFO src.evaluation.make_testset: query for d16160 copied the article or was empty; retrying
+2026-10-25 17:42:21,879 INFO src.finetune: training queries: 230 / 300
+2026-10-25 17:44:05,525 INFO src.finetune: training queries: 240 / 300
+2026-10-25 17:45:50,833 INFO src.finetune: training queries: 250 / 300
+2026-10-25 17:47:37,623 INFO src.finetune: training queries: 260 / 300
+2026-10-25 17:49:24,072 INFO src.finetune: training queries: 270 / 300
+2026-10-25 17:51:09,395 INFO src.finetune: training queries: 280 / 300
+2026-10-25 17:52:48,332 INFO src.finetune: training queries: 290 / 300
+2026-10-25 17:54:36,356 INFO src.evaluation.make_testset: query for d19929 copied the article or was empty; retrying
+2026-10-25 17:54:46,923 INFO src.finetune: training queries: 300 / 300
+2026-10-25 17:54:47,069 INFO src.finetune: wrote C:\DocSearchLLM\doc-search-summarizer\data\processed\finetune_pairs.csv (300 pairs, 0 test documents)
