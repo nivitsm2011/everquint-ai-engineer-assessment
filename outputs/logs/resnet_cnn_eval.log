@@ -1,0 +1,32 @@
+14:31:35 | INFO | Loaded outputs\checkpoints\resnet_cnn\best.pt (epoch 10, val acc 75.70%)
+14:33:34 | INFO | TEST loss 0.6979 | TEST accuracy 75.32% (10000 images)
+14:33:34 | INFO | class         accuracy precision    recall        f1
+14:33:34 | INFO | airplane        75.60%     0.764     0.756     0.760
+14:33:34 | INFO | automobile      88.80%     0.910     0.888     0.899
+14:33:34 | INFO | bird            58.50%     0.633     0.585     0.608
+14:33:34 | INFO | cat             57.00%     0.588     0.570     0.579
+14:33:34 | INFO | deer            69.00%     0.693     0.690     0.692
+14:33:34 | INFO | dog             66.10%     0.673     0.661     0.667
+14:33:34 | INFO | frog            83.30%     0.731     0.833     0.779
+14:33:34 | INFO | horse           75.20%     0.833     0.752     0.790
+14:33:34 | INFO | ship            91.40%     0.835     0.914     0.873
+14:33:34 | INFO | truck           88.30%     0.860     0.883     0.871
+14:33:34 | INFO | 
+              precision    recall  f1-score   support
+
+    airplane      0.764     0.756     0.760      1000
+  automobile      0.910     0.888     0.899      1000
+        bird      0.633     0.585     0.608      1000
+         cat      0.588     0.570     0.579      1000
+        deer      0.693     0.690     0.692      1000
+         dog      0.673     0.661     0.667      1000
+        frog      0.731     0.833     0.779      1000
+       horse      0.833     0.752     0.790      1000
+        ship      0.835     0.914     0.873      1000
+       truck      0.860     0.883     0.871      1000
+
+    accuracy                          0.753     10000
+   macro avg      0.752     0.753     0.752     10000
+weighted avg      0.752     0.753     0.752     10000
+
+14:33:43 | INFO | Saved metrics to outputs\results\resnet_cnn_metrics.json and plots to outputs\plots

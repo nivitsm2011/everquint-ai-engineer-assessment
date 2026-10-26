@@ -1,0 +1,22 @@
+12:36:47 | INFO | Run baseline_cnn | device cpu | 288,746 parameters | 45000 train / 5000 val images
+12:38:49 | INFO | Epoch 01/10 | train loss 1.8715 acc 29.00% | val loss 1.5161 acc 43.40% | lr 0.00400 | 121.5s
+12:38:49 | INFO | New best validation accuracy: 43.40%
+12:40:21 | INFO | Epoch 02/10 | train loss 1.5124 acc 43.86% | val loss 1.2117 acc 56.56% | lr 0.02804 | 92.3s
+12:40:21 | INFO | New best validation accuracy: 56.56%
+12:43:01 | INFO | Epoch 03/10 | train loss 1.2449 acc 54.95% | val loss 1.0763 acc 60.96% | lr 0.07608 | 160.5s
+12:43:01 | INFO | New best validation accuracy: 60.96%
+12:45:48 | INFO | Epoch 04/10 | train loss 1.0971 acc 60.77% | val loss 0.9171 acc 67.72% | lr 0.10000 | 166.1s
+12:45:48 | INFO | New best validation accuracy: 67.72%
+12:47:27 | INFO | Epoch 05/10 | train loss 0.9881 acc 64.98% | val loss 0.8521 acc 70.00% | lr 0.09502 | 99.8s
+12:47:27 | INFO | New best validation accuracy: 70.00%
+12:49:22 | INFO | Epoch 06/10 | train loss 0.9096 acc 68.16% | val loss 0.7577 acc 74.02% | lr 0.08112 | 114.4s
+12:49:22 | INFO | New best validation accuracy: 74.02%
+12:50:56 | INFO | Epoch 07/10 | train loss 0.8312 acc 71.08% | val loss 0.6816 acc 76.72% | lr 0.06106 | 93.8s
+12:50:56 | INFO | New best validation accuracy: 76.72%
+12:52:46 | INFO | Epoch 08/10 | train loss 0.7656 acc 73.58% | val loss 0.6282 acc 78.38% | lr 0.03881 | 110.2s
+12:52:46 | INFO | New best validation accuracy: 78.38%
+12:55:34 | INFO | Epoch 09/10 | train loss 0.6933 acc 76.15% | val loss 0.5428 acc 81.36% | lr 0.01878 | 167.8s
+12:55:34 | INFO | New best validation accuracy: 81.36%
+12:58:28 | INFO | Epoch 10/10 | train loss 0.6268 acc 78.70% | val loss 0.5067 acc 82.92% | lr 0.00492 | 174.5s
+12:58:28 | INFO | New best validation accuracy: 82.92%
+12:58:28 | INFO | Finished. Best validation accuracy: 82.92%

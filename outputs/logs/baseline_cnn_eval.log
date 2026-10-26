@@ -1,0 +1,32 @@
+12:59:42 | INFO | Loaded outputs\checkpoints\baseline_cnn\best.pt (epoch 10, val acc 82.92%)
+13:01:58 | INFO | TEST loss 0.5302 | TEST accuracy 81.70% (10000 images)
+13:01:58 | INFO | class         accuracy precision    recall        f1
+13:01:58 | INFO | airplane        83.60%     0.819     0.836     0.827
+13:01:58 | INFO | automobile      92.00%     0.918     0.920     0.919
+13:01:58 | INFO | bird            68.80%     0.755     0.688     0.720
+13:01:58 | INFO | cat             62.90%     0.698     0.629     0.662
+13:01:58 | INFO | deer            79.60%     0.795     0.796     0.796
+13:01:58 | INFO | dog             76.80%     0.734     0.768     0.751
+13:01:58 | INFO | frog            87.50%     0.801     0.875     0.837
+13:01:58 | INFO | horse           83.30%     0.876     0.833     0.854
+13:01:58 | INFO | ship            91.80%     0.887     0.918     0.902
+13:01:58 | INFO | truck           90.70%     0.872     0.907     0.889
+13:01:58 | INFO | 
+              precision    recall  f1-score   support
+
+    airplane      0.819     0.836     0.827      1000
+  automobile      0.918     0.920     0.919      1000
+        bird      0.755     0.688     0.720      1000
+         cat      0.698     0.629     0.662      1000
+        deer      0.795     0.796     0.796      1000
+         dog      0.734     0.768     0.751      1000
+        frog      0.801     0.875     0.837      1000
+       horse      0.876     0.833     0.854      1000
+        ship      0.887     0.918     0.902      1000
+       truck      0.872     0.907     0.889      1000
+
+    accuracy                          0.817     10000
+   macro avg      0.816     0.817     0.816     10000
+weighted avg      0.816     0.817     0.816     10000
+
+13:02:07 | INFO | Saved metrics to outputs\results\baseline_cnn_metrics.json and plots to outputs\plots
