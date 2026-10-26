@@ -1,0 +1,32 @@
+# Experiment configuration. Every key can be overridden from the CLI,
+# e.g. `python train.py --epochs 5 --model_name resnet_cnn`.
+
+seed: 42
+
+# Data
+data_dir: data
+batch_size: 128
+num_workers: null       # null = auto (min(4, cpu_count)); 0 disables worker processes
+val_split: 5000         # images held out from the 50k training set
+
+# Model
+model_name: baseline_cnn   # baseline_cnn | resnet_cnn
+dropout: 0.3
+
+# Optimisation
+epochs: 10
+learning_rate: 0.1      # peak LR for OneCycleLR, initial LR for cosine
+weight_decay: 0.0005
+optimizer: sgd          # sgd | adamw
+momentum: 0.9           # used by sgd only
+scheduler: onecycle     # onecycle | cosine
+grad_clip: 0.0          # max gradient norm; 0 disables clipping
+use_amp: false          # mixed precision (only takes effect on CUDA)
+early_stopping_patience: 5
+
+# Output locations
+checkpoint_dir: outputs/checkpoints
+plot_dir: outputs/plots
+log_dir: outputs/logs
+results_dir: outputs/results
+onnx_path: outputs/model.onnx   # exported model used by export_onnx.py and the API

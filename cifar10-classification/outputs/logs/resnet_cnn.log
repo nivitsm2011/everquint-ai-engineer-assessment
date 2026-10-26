@@ -1,0 +1,22 @@
+13:09:38 | INFO | Run resnet_cnn | device cpu | 308,650 parameters | 45000 train / 5000 val images
+13:15:14 | INFO | Epoch 01/10 | train loss 1.9358 acc 26.03% | val loss 1.7525 acc 32.74% | lr 0.00400 | 335.9s
+13:15:14 | INFO | New best validation accuracy: 32.74%
+13:20:38 | INFO | Epoch 02/10 | train loss 1.6508 acc 37.76% | val loss 1.6563 acc 42.32% | lr 0.02804 | 324.2s
+13:20:38 | INFO | New best validation accuracy: 42.32%
+13:29:48 | INFO | Epoch 03/10 | train loss 1.4243 acc 47.37% | val loss 1.2486 acc 53.96% | lr 0.07608 | 550.3s
+13:29:49 | INFO | New best validation accuracy: 53.96%
+13:38:53 | INFO | Epoch 04/10 | train loss 1.2657 acc 53.99% | val loss 1.1286 acc 57.88% | lr 0.10000 | 544.8s
+13:38:53 | INFO | New best validation accuracy: 57.88%
+13:47:46 | INFO | Epoch 05/10 | train loss 1.1468 acc 58.77% | val loss 1.0096 acc 63.74% | lr 0.09502 | 532.7s
+13:47:46 | INFO | New best validation accuracy: 63.74%
+13:56:25 | INFO | Epoch 06/10 | train loss 1.0783 acc 61.57% | val loss 0.9723 acc 64.76% | lr 0.08112 | 519.2s
+13:56:25 | INFO | New best validation accuracy: 64.76%
+14:05:03 | INFO | Epoch 07/10 | train loss 1.0061 acc 64.30% | val loss 0.8825 acc 68.80% | lr 0.06106 | 517.8s
+14:05:03 | INFO | New best validation accuracy: 68.80%
+14:13:37 | INFO | Epoch 08/10 | train loss 0.9466 acc 66.45% | val loss 0.8571 acc 69.56% | lr 0.03881 | 514.1s
+14:13:37 | INFO | New best validation accuracy: 69.56%
+14:22:14 | INFO | Epoch 09/10 | train loss 0.8691 acc 69.32% | val loss 0.7313 acc 74.18% | lr 0.01878 | 516.2s
+14:22:14 | INFO | New best validation accuracy: 74.18%
+14:30:50 | INFO | Epoch 10/10 | train loss 0.8141 acc 71.20% | val loss 0.6799 acc 75.70% | lr 0.00492 | 516.0s
+14:30:50 | INFO | New best validation accuracy: 75.70%
+14:30:50 | INFO | Finished. Best validation accuracy: 75.70%
